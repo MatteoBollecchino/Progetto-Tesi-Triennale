@@ -46,7 +46,7 @@ class StackelbergSecurityGameEnv(gym.Env):
             "strategy": strategy
         }
 
-if __name__ == "main":
+if __name__ == "__main__":
     env = StackelbergSecurityGameEnv(n_targets=3)
 
     obs, _ = env.reset()
