@@ -50,7 +50,9 @@ if __name__ == "__main__":
     env = StackelbergSecurityGameEnv(n_targets=3)
 
     obs, _ = env.reset()
-    strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)  # esempio: proteggere i target 0,1,2 con queste probabilità
+    
+    # esempio: proteggere i target 0,1,2 con queste probabilità
+    strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)
     obs, reward, done, _, info = env.step(strategy)
 
     print("Reward Difensore:", reward)
