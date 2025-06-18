@@ -1,6 +1,7 @@
 import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
+import GrafoPesato as GP
 
 class StackelbergSecurityGameEnv(gym.Env):
     def __init__(self, n_targets=3):
@@ -58,4 +59,15 @@ if __name__ == "__main__":
     print("Reward Difensore:", reward)
     print("Target Attaccato:", info["target_attacked"])
     print("Strategia Normalizzata:", info["strategy"])
+    
+    grafo = GP.GrafoPesato()
 
+    # Aggiunta di nodi e archi
+    grafo.aggiungi_arco('A', 'B', 4)
+    grafo.aggiungi_arco('A', 'C', 2)
+    grafo.aggiungi_arco('B', 'C', 5)
+    grafo.aggiungi_arco('B', 'D', 10)
+    grafo.aggiungi_arco('C', 'D', 3)
+    
+    # Stampa del grafo
+    print(grafo)
