@@ -3,7 +3,7 @@ from gymnasium import spaces
 import numpy as np
 
 class StackelbergSecurityGameEnv(gym.Env):
-    def __init__(self, n_targets=3):
+    def __init__(self, n_targets):
         super(StackelbergSecurityGameEnv, self).__init__()
         self.n_targets = n_targets
         
