@@ -1,6 +1,7 @@
 import StackelbergSecurityGameEnv as ssg
 import GrafoPesato as gp
 import numpy as np
+import networkx as nx
 
 if __name__ == "__main__":
     env = ssg.StackelbergSecurityGameEnv(n_targets=3)
@@ -14,32 +15,38 @@ if __name__ == "__main__":
     print("Reward Difensore:", reward)
     print("Target Attaccato:", info["target_attacked"])
     print("Strategia Normalizzata:", info["strategy"])
-    
-    grafo = gp.GrafoPesato()
+
+    grafo = nx.DiGraph()
 
     # Aggiunta di nodi e archi
-    grafo.add_edge('EWS', 'OWS', 1, 3)
-    grafo.add_edge('OWS', 'EWS', 2, 4)
-    grafo.add_edge('EWS', 'S3', 20, 1)
-    grafo.add_edge('OWS', 'S3', 10, 3)
-    grafo.add_edge('S3', 'MHS', 3, 4)
-    grafo.add_edge('S3', 'SS', 3, 4)
-    grafo.add_edge('S3', 'F', 3, 4)
-    grafo.add_edge('MHS', 'SS', 3, 4)
-    grafo.add_edge('SS', 'MHS', 3, 4)
-    grafo.add_edge('F', 'PMS', 3, 4)
-    grafo.add_edge('F', 'AS', 3, 4)
-    grafo.add_edge('F', 'SUS', 3, 4)
-    grafo.add_edge('F', 'SFTPS', 3, 4)
-    grafo.add_edge('F', 'RAS', 3, 4)
-    grafo.add_edge('PMS', 'AS', 3, 4)
-    grafo.add_edge('AS', 'PMS', 3, 4)
-    grafo.add_edge('AS', 'SUS', 3, 4)
-    grafo.add_edge('SUS', 'AS', 3, 4)
-    grafo.add_edge('SFTPS', 'RAS', 3, 4)
-    grafo.add_edge('RAS', 'SFTPS', 3, 4)
+    grafo.add_edge('EWS', 'OWS', weight=3)
+    grafo.add_edge('OWS', 'EWS', weight=4)
+    grafo.add_edge('EWS', 'S3', weight=1)
+    grafo.add_edge('OWS', 'S3', weight=3)
+    grafo.add_edge('S3', 'MHS', weight=4)
+    grafo.add_edge('S3', 'SS', weight=4)
+    grafo.add_edge('S3', 'F', weight=4)
+    grafo.add_edge('MHS', 'SS', weight=4)
+    grafo.add_edge('SS', 'MHS', weight=4)
+    grafo.add_edge('F', 'PMS', weight=4)
+    grafo.add_edge('F', 'AS', weight=4)
+    grafo.add_edge('F', 'SUS', weight=4)
+    grafo.add_edge('F', 'SFTPS', weight=4)
+    grafo.add_edge('F', 'RAS', weight=4)
+    grafo.add_edge('PMS', 'AS', weight=4)
+    grafo.add_edge('AS', 'PMS', weight=4)
+    grafo.add_edge('AS', 'SUS', weight=4)
+    grafo.add_edge('SUS', 'AS', weight=4)
+    grafo.add_edge('SFTPS', 'RAS', weight=4)
+    grafo.add_edge('RAS', 'SFTPS', weight=4)
     
-    # Stampa del grafo
-    print(grafo)
 
-    print(grafo.get_neighbours('A'))
+    print(grafo)
+    # Stampa del grafo
+    print(grafo.nodes)
+    print(grafo.edges)
+
+    grafo.nodes['F']['impact'] = 2
+
+    print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
+    print(f"Impatto nodo F : {grafo.nodes['F']['impact']}")
