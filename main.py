@@ -46,7 +46,17 @@ if __name__ == "__main__":
     print(grafo.nodes)
     print(grafo.edges)
 
-    grafo.nodes['F']['impact'] = 2
+    grafo.nodes['OWS']['impact'] = 1
+    grafo.nodes['EWS']['impact'] = 2
+    grafo.nodes['S3']['impact'] = 3
+    grafo.nodes['MHS']['impact'] = 4
+    grafo.nodes['SS']['impact'] = 4
+    grafo.nodes['F']['impact'] = 5
+    grafo.nodes['PMS']['impact'] = 9
+    grafo.nodes['AS']['impact'] = 10
+    grafo.nodes['SUS']['impact'] = 7
+    grafo.nodes['SFTPS']['impact'] = 6
+    grafo.nodes['RAS']['impact'] = 8
 
     print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
-    print(f"Impatto nodo F : {grafo.nodes['F']['impact']}")
+    print(f"Impatto nodo AS : {grafo.nodes['AS']['impact']}")
