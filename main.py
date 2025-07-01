@@ -41,7 +41,7 @@ if __name__ == "__main__":
     grafo.add_edge('RAS', 'SFTPS', weight = 0.24)
     
 
-    print(grafo)
+    print(f"Descrizione grafo: {grafo}")
     # Stampa del grafo
     print(grafo.nodes)
     print(grafo.edges)
