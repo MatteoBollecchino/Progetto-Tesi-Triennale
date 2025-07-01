@@ -1,17 +1,21 @@
 import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
+import networkx as nx
 
 class StackelbergSecurityGameEnv(gym.Env):
-    def __init__(self, n_targets):
+    def __init__(self, grafo: nx.DiGraph, budget_difensore : int, contromisure: list):
         super(StackelbergSecurityGameEnv, self).__init__()
-        self.n_targets = n_targets
+        self.grafo = grafo # DiGraph
+        self.budget_difensore = budget_difensore # intero
+        self.contromisure = contromisure # liste di coppie (costo, efficacia sull'arco)
+        self.n_targets = grafo.number_of_nodes()
         
         # Difensore: distribuzione di probabilità sulla protezione dei target
-        self.action_space = spaces.Box(low=0, high=1, shape=(n_targets,), dtype=np.float32)
+        self.action_space = spaces.Box(low=0, high=1, shape=(self.n_targets,), dtype=np.float32)
         
         # Osservazione fittizia (non è rilevante in SSG statico)
-        self.observation_space = spaces.Box(low=0, high=1, shape=(n_targets,), dtype=np.float32)
+        self.observation_space = spaces.Box(low=0, high=1, shape=(self.n_targets,), dtype=np.float32)
         
         # Reward matrix: righe = target, colonne = [reward if defended, reward if attacked]
         self.defender_rewards = np.array([[1, -10], [1, -5], [1, -1]])  # esempio
@@ -40,7 +44,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         defender_reward = prob_defended * self.defender_rewards[target_attacked][0] + \
                           (1 - prob_defended) * self.defender_rewards[target_attacked][1]
         
-        done = True  # gioco a un passo
+        done = False  # gioco in più passi
         return np.zeros(self.n_targets, dtype=np.float32), defender_reward, done, False, {
             "target_attacked": target_attacked,
             "strategy": strategy

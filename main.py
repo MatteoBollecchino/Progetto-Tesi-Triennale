@@ -4,18 +4,8 @@ import numpy as np
 import networkx as nx
 
 if __name__ == "__main__":
-    env = ssg.StackelbergSecurityGameEnv(n_targets=3)
 
-    obs, _ = env.reset()
-    
-    # esempio: proteggere i target 0,1,2 con queste probabilità
-    strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)
-    obs, reward, done, _, info = env.step(strategy)
-
-    print("Reward Difensore:", reward)
-    print("Target Attaccato:", info["target_attacked"])
-    print("Strategia Normalizzata:", info["strategy"])
-
+    # Creazione grafo SUC
     grafo = nx.DiGraph()
 
     # Aggiunta di nodi e archi
@@ -41,8 +31,8 @@ if __name__ == "__main__":
     grafo.add_edge('RAS', 'SFTPS', weight = 0.24)
     
 
-    print(f"Descrizione grafo: {grafo}")
     # Stampa del grafo
+    print(f"Descrizione grafo: {grafo}")
     print(grafo.nodes)
     print(grafo.edges)
 
@@ -60,3 +50,18 @@ if __name__ == "__main__":
 
     print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
     print(f"Impatto nodo AS : {grafo.nodes['AS']['impact']}")
+
+    # Da modificare 
+    """
+    env = ssg.StackelbergSecurityGameEnv(n_targets=3)
+
+    obs, _ = env.reset()
+    
+    # esempio: proteggere i target 0,1,2 con queste probabilità
+    strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)
+    obs, reward, done, _, info = env.step(strategy)
+
+    print("Reward Difensore:", reward)
+    print("Target Attaccato:", info["target_attacked"])
+    print("Strategia Normalizzata:", info["strategy"])
+    """
