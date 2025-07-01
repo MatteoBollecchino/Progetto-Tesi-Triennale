@@ -51,8 +51,11 @@ if __name__ == "__main__":
     print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
     print(f"Impatto nodo AS : {grafo.nodes['AS']['impact']}")
 
+    budget_difensore = 10000
+    contromisure = [(500,0.2)]
+
     # Da modificare 
-    """
+
     env = ssg.StackelbergSecurityGameEnv(n_targets=3)
 
     obs, _ = env.reset()
@@ -64,4 +67,3 @@ if __name__ == "__main__":
     print("Reward Difensore:", reward)
     print("Target Attaccato:", info["target_attacked"])
     print("Strategia Normalizzata:", info["strategy"])
-    """
