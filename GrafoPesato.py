@@ -1,3 +1,4 @@
+# Classe da non usare in quanto si usufruisce della libreria NetworkX
 class GrafoPesato:
     def __init__(self):
         self.nodes = {}
