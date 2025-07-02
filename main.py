@@ -36,6 +36,8 @@ if __name__ == "__main__":
     print(grafo.nodes)
     print(grafo.edges)
 
+    # Nodi più esterni -> impatto minore
+
     grafo.nodes['OWS']['impact'] = 1
     grafo.nodes['EWS']['impact'] = 2
     grafo.nodes['S3']['impact'] = 3
