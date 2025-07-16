@@ -2,6 +2,7 @@ import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
 import networkx as nx
+from utils import Utils as ut
 
 class StackelbergSecurityGameEnv(gym.Env):
     def __init__(self, grafo: nx.DiGraph, budget_difensore : int, contromisure: list):
@@ -16,7 +17,11 @@ class StackelbergSecurityGameEnv(gym.Env):
         
         # Osservazione fittizia (non è rilevante in SSG statico)
         self.observation_space = spaces.Box(low=0, high=1, shape=(self.n_targets,), dtype=np.float32)
-        
+
+        # path da OWS e da EWS
+        paths_1 = ut.get_paths(self.grafo, 'OWS')
+        paths_2 = ut.get_paths(self.grafo, 'EWS')
+
         # Reward matrix: righe = target, colonne = [reward if defended, reward if attacked]
         self.defender_rewards = np.array([[1, -10], [1, -5], [1, -1]])  # esempio
         self.attacker_rewards = np.array([[-1, 10], [-1, 5], [-1, 1]])

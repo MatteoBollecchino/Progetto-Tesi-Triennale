@@ -1,7 +1,8 @@
-import StackelbergSecurityGameEnv as ssg
+import ssg as ssg
 import GrafoPesato as gp
 import numpy as np
 import networkx as nx
+from utils import Utils as ut
 
 if __name__ == "__main__":
 
@@ -32,9 +33,9 @@ if __name__ == "__main__":
     
 
     # Stampa del grafo
-    print(f"Descrizione grafo: {grafo}")
-    print(grafo.nodes)
-    print(grafo.edges)
+    # print(f"Descrizione grafo: {grafo}")
+    # print(grafo.nodes)
+    # print(grafo.edges)
 
     # Nodi più esterni -> impatto minore
 
@@ -50,14 +51,25 @@ if __name__ == "__main__":
     grafo.nodes['SFTPS']['impact'] = 6
     grafo.nodes['RAS']['impact'] = 8
 
-    print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
-    print(f"Impatto nodo AS : {grafo.nodes['AS']['impact']}")
+    # print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
+    # print(f"Impatto nodo AS : {grafo.nodes['AS']['impact']}")
 
     budget_difensore = 10000
     contromisure = [(500,0.2)]
 
-    # Da modificare 
+    origine_1 = 'OWS'
+    paths_1 = list()
+    origine_2 = 'EWS'
+    paths_2 = list()
+    for node in grafo.nodes:
+        target = node
+        paths_1 = paths_1 + list(nx.all_simple_paths(grafo, source=origine_1, target=target))
+        paths_2 = paths_2 + list(nx.all_simple_paths(grafo, source=origine_2, target=target))
 
+    print(ut.get_paths(grafo, 'F'))
+
+    # Da modificare 
+    """
     env = ssg.StackelbergSecurityGameEnv(n_targets=3)
 
     obs, _ = env.reset()
@@ -69,3 +81,4 @@ if __name__ == "__main__":
     print("Reward Difensore:", reward)
     print("Target Attaccato:", info["target_attacked"])
     print("Strategia Normalizzata:", info["strategy"])
+    """
