@@ -7,29 +7,29 @@ from utils import Utils as ut
 if __name__ == "__main__":
 
     # Creazione grafo SUC
-    grafo = nx.DiGraph()
+    graph = nx.DiGraph()
 
     # Aggiunta di nodi e archi
-    grafo.add_edge('EWS', 'OWS', weight = 0.69)
-    grafo.add_edge('OWS', 'EWS', weight = 0.77)
-    grafo.add_edge('EWS', 'S3', weight = 0.92)
-    grafo.add_edge('OWS', 'S3', weight = 0.57)
-    grafo.add_edge('S3', 'MHS', weight = 0.93)
-    grafo.add_edge('S3', 'SS', weight = 0.71)
-    grafo.add_edge('S3', 'F', weight = 0.89)
-    grafo.add_edge('MHS', 'SS', weight = 0.40)
-    grafo.add_edge('SS', 'MHS', weight = 0.74)
-    grafo.add_edge('F', 'PMS', weight = 0.90)
-    grafo.add_edge('F', 'AS', weight = 0.82)
-    grafo.add_edge('F', 'SUS', weight = 0.38)
-    grafo.add_edge('F', 'SFTPS', weight = 0.86)
-    grafo.add_edge('F', 'RAS', weight = 0.44)
-    grafo.add_edge('PMS', 'AS', weight = 0.46)
-    grafo.add_edge('AS', 'PMS', weight = 0.80)
-    grafo.add_edge('AS', 'SUS', weight = 0.72) 
-    grafo.add_edge('SUS', 'AS', weight = 0.26)
-    grafo.add_edge('SFTPS', 'RAS', weight = 0.30)
-    grafo.add_edge('RAS', 'SFTPS', weight = 0.24)
+    graph.add_edge('EWS', 'OWS', weight = 0.69)
+    graph.add_edge('OWS', 'EWS', weight = 0.77)
+    graph.add_edge('EWS', 'S3', weight = 0.92)
+    graph.add_edge('OWS', 'S3', weight = 0.57)
+    graph.add_edge('S3', 'MHS', weight = 0.93)
+    graph.add_edge('S3', 'SS', weight = 0.71)
+    graph.add_edge('S3', 'F', weight = 0.89)
+    graph.add_edge('MHS', 'SS', weight = 0.40)
+    graph.add_edge('SS', 'MHS', weight = 0.74)
+    graph.add_edge('F', 'PMS', weight = 0.90)
+    graph.add_edge('F', 'AS', weight = 0.82)
+    graph.add_edge('F', 'SUS', weight = 0.38)
+    graph.add_edge('F', 'SFTPS', weight = 0.86)
+    graph.add_edge('F', 'RAS', weight = 0.44)
+    graph.add_edge('PMS', 'AS', weight = 0.46)
+    graph.add_edge('AS', 'PMS', weight = 0.80)
+    graph.add_edge('AS', 'SUS', weight = 0.72) 
+    graph.add_edge('SUS', 'AS', weight = 0.26)
+    graph.add_edge('SFTPS', 'RAS', weight = 0.30)
+    graph.add_edge('RAS', 'SFTPS', weight = 0.24)
     
 
     # Stampa del grafo
@@ -39,17 +39,17 @@ if __name__ == "__main__":
 
     # Nodi più esterni -> impatto minore
 
-    grafo.nodes['OWS']['impact'] = 1
-    grafo.nodes['EWS']['impact'] = 2
-    grafo.nodes['S3']['impact'] = 3
-    grafo.nodes['MHS']['impact'] = 4
-    grafo.nodes['SS']['impact'] = 4
-    grafo.nodes['F']['impact'] = 5
-    grafo.nodes['PMS']['impact'] = 9
-    grafo.nodes['AS']['impact'] = 10
-    grafo.nodes['SUS']['impact'] = 7
-    grafo.nodes['SFTPS']['impact'] = 6
-    grafo.nodes['RAS']['impact'] = 8
+    graph.nodes['OWS']['impact'] = 1
+    graph.nodes['EWS']['impact'] = 2
+    graph.nodes['S3']['impact'] = 3
+    graph.nodes['MHS']['impact'] = 4
+    graph.nodes['SS']['impact'] = 4
+    graph.nodes['F']['impact'] = 5
+    graph.nodes['PMS']['impact'] = 9
+    graph.nodes['AS']['impact'] = 10
+    graph.nodes['SUS']['impact'] = 7
+    graph.nodes['SFTPS']['impact'] = 6
+    graph.nodes['RAS']['impact'] = 8
 
     # print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
     # print(f"Impatto nodo AS : {grafo.nodes['AS']['impact']}")
@@ -61,12 +61,12 @@ if __name__ == "__main__":
     paths_1 = list()
     origine_2 = 'EWS'
     paths_2 = list()
-    for node in grafo.nodes:
+    for node in graph.nodes:
         target = node
-        paths_1 = paths_1 + list(nx.all_simple_paths(grafo, source=origine_1, target=target))
-        paths_2 = paths_2 + list(nx.all_simple_paths(grafo, source=origine_2, target=target))
+        paths_1 = paths_1 + list(nx.all_simple_paths(graph, source=origine_1, target=target))
+        paths_2 = paths_2 + list(nx.all_simple_paths(graph, source=origine_2, target=target))
 
-    print(ut.get_paths(grafo, 'F'))
+    print(ut.get_paths(graph, 'OWS') + ut.get_paths(graph, 'EWS'))
 
     # Da modificare 
     """

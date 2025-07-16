@@ -5,12 +5,12 @@ import networkx as nx
 from utils import Utils as ut
 
 class StackelbergSecurityGameEnv(gym.Env):
-    def __init__(self, grafo: nx.DiGraph, budget_difensore : int, contromisure: list):
+    def __init__(self, graph: nx.DiGraph, budget_defender : int, countermeasures: list):
         super(StackelbergSecurityGameEnv, self).__init__()
-        self.grafo = grafo # DiGraph
-        self.budget_difensore = budget_difensore # intero
-        self.contromisure = contromisure # liste di coppie (costo, efficacia sull'arco)
-        self.n_targets = grafo.number_of_nodes()
+        self.grafo = graph # DiGraph
+        self.budget_difensore = budget_defender # intero
+        self.contromisure = countermeasures # liste di coppie (costo, efficacia sull'arco)
+        self.n_targets = graph.number_of_nodes()
         
         # Difensore: distribuzione di probabilità sulla protezione dei target
         self.action_space = spaces.Box(low=0, high=1, shape=(self.n_targets,), dtype=np.float32)
@@ -19,8 +19,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.observation_space = spaces.Box(low=0, high=1, shape=(self.n_targets,), dtype=np.float32)
 
         # path da OWS e da EWS
-        paths_1 = ut.get_paths(self.grafo, 'OWS')
-        paths_2 = ut.get_paths(self.grafo, 'EWS')
+        paths = ut.get_paths(self.grafo, 'OWS') + ut.get_paths(self.grafo, 'EWS')
 
         # Reward matrix: righe = target, colonne = [reward if defended, reward if attacked]
         self.defender_rewards = np.array([[1, -10], [1, -5], [1, -1]])  # esempio
