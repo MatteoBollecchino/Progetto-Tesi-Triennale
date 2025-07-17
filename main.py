@@ -66,7 +66,21 @@ if __name__ == "__main__":
         paths_1 = paths_1 + list(nx.all_simple_paths(graph, source=origine_1, target=target))
         paths_2 = paths_2 + list(nx.all_simple_paths(graph, source=origine_2, target=target))
 
-    print(ut.get_paths(graph, 'OWS') + ut.get_paths(graph, 'EWS'))
+    paths = paths_1 + paths_2
+
+    risk_values = list()
+
+    path = paths[10]
+    print(path)
+
+    for i in range(len(path)-1):
+        node = path[i]
+        successor = path[i+1]
+        afr = graph.get_edge_data(node,successor)['weight']
+        risk_values.append(ut.get_node_risk(graph.nodes[node], afr))
+
+    print(risk_values)
+    print(max(risk_values))
 
     # Da modificare 
     """

@@ -1,5 +1,6 @@
 import numpy as np
 import networkx as nx 
+import random
 
 class Utils:
     def get_paths(grafo: nx.DiGraph, origine):
@@ -13,14 +14,22 @@ class Utils:
         return paths
     
     # Metodo per la traduzione della tabella del paper del lollo
-    def get_risk():
-        pass
-    
-    def get_node_risk():
-        pass
+    # node_source -> nodo dal quale esce l'arco, afr -> probabilità arco uscente
+    def get_node_risk(node_source, afr):
+        impact = node_source['impact']
 
-    def get_path_risk():
-        pass
+        return (impact/10 + afr)/2
+
+    def get_path_risk(graph: nx.DiGraph, path: list):
+        risk_values = list()
+
+        for i in range(len(path)-1):
+            node = path[i]
+            successor = path[i+1]
+            afr = graph.get_edge_data(node,successor)['weight']
+            risk_values = risk_values + Utils.get_node_risk(graph.nodes[node], afr)
+
+        return max(risk_values)
 
     def get_maximum_risk_path():
         pass
