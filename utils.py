@@ -16,9 +16,10 @@ class Utils:
     # Metodo per la traduzione della tabella del paper del lollo
     # node_source -> nodo dal quale esce l'arco, afr -> probabilità arco uscente
     def get_node_risk(node_source, afr):
-        impact = node_source['impact']
+        impact_norm = (node_source['impact'] - 1) / 9
 
-        return (impact/10 + afr)/2
+        # oppure (impact/10 + afr)/2
+        return round(afr * 0.6 + impact_norm * 0.4, 4)
 
     def get_path_risk(graph: nx.DiGraph, path: list):
         risk_values = list()
