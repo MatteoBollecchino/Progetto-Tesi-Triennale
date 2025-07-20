@@ -30,12 +30,8 @@ if __name__ == "__main__":
     graph.add_edge('SUS', 'AS', weight = 0.26)
     graph.add_edge('SFTPS', 'RAS', weight = 0.30)
     graph.add_edge('RAS', 'SFTPS', weight = 0.24)
-    
 
-    # Stampa del grafo
-    # print(f"Descrizione grafo: {grafo}")
-    # print(grafo.nodes)
-    # print(grafo.edges)
+
 
     # Nodi più esterni -> impatto minore
 
@@ -51,49 +47,11 @@ if __name__ == "__main__":
     graph.nodes['SFTPS']['impact'] = 6
     graph.nodes['RAS']['impact'] = 8
 
-    # print(f"Peso arco : {grafo.edges['F','RAS']['weight']}")
-    # print(f"Impatto nodo AS : {grafo.nodes['AS']['impact']}")
-
     budget_difensore = 10000
     contromisure = [(500,0.2)]
 
-    """
-    origine_1 = 'OWS'
-    paths_1 = list()
-    origine_2 = 'EWS'
-    paths_2 = list()
-    for node in graph.nodes:
-        target = node
-        paths_1 = paths_1 + list(nx.all_simple_paths(graph, source=origine_1, target=target))
-        paths_2 = paths_2 + list(nx.all_simple_paths(graph, source=origine_2, target=target))
-
-    paths = paths_1 + paths_2
-
-    risk_values = list()
-
-    path = paths[10]
-    print(path)
-
-    for i in range(len(path)-1):
-        node = path[i]
-        successor = path[i+1]
-        afr = graph.get_edge_data(node,successor)['weight']
-        risk_values.append(ut.get_node_risk(graph.nodes[node], afr))
-
-    print(risk_values)
-    print(max(risk_values))
-    """
-
-    node_source = 'OWS'
-    paths = ut.get_paths(graph, node_source)
-    risk_paths = list()
-
-    for path in paths:
-        risk_paths.append(ut.get_path_risk(graph, path))
-
-    index_max_risk_path = risk_paths.index(max(risk_paths))
-
-    print(paths[index_max_risk_path])
+    print(ut.get_paths(graph, 'OWS'))
+    print(ut.get_maximum_risk_path(graph, 'OWS'))
 
     # Da modificare 
     """

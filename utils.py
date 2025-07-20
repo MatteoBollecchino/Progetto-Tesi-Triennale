@@ -4,26 +4,26 @@ import random
 
 class Utils:
     # Restituisce tutti i path che hanno origine in 'source'
-    def get_paths(grafo: nx.DiGraph, source: str):
+    def get_paths(grafo: nx.DiGraph, node_source: str) -> list:
 
         paths = list()
 
         for node in grafo.nodes:
             target = node
-            paths = paths + list(nx.all_simple_paths(grafo, source=source, target=target))
+            paths = paths + list(nx.all_simple_paths(grafo, source=node_source, target=target))
 
         return paths
     
     # Metodo per la traduzione della tabella del paper del lollo
     # node_source -> nodo dal quale esce l'arco, afr -> probabilità arco uscente
-    def get_node_risk(node_source: str, afr):
+    def get_node_risk(node_source: str, afr: float) -> float:
         impact_norm = (node_source['impact'] - 1) / 9
 
         # oppure (impact/10 + afr)/2
         return round(afr * 0.6 + impact_norm * 0.4, 4)
 
     # Restituisce il rischio del path passato per parametro
-    def get_path_risk(graph: nx.DiGraph, path: list):
+    def get_path_risk(graph: nx.DiGraph, path: list) -> float:
         risk_values = list()
 
         # Path di lunghezza 1 = loop
@@ -39,7 +39,7 @@ class Utils:
         return max(risk_values)
     
     # Restituisce il path che tra tutti ha il rischio maggiore associato
-    def get_maximum_risk_path(graph: nx.DiGraph, node_source: str):
+    def get_maximum_risk_path(graph: nx.DiGraph, node_source: str) -> list:
         paths = Utils.get_paths(graph, node_source)
         risk_paths = list()
 
