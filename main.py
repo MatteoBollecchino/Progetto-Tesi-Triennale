@@ -57,6 +57,7 @@ if __name__ == "__main__":
     budget_difensore = 10000
     contromisure = [(500,0.2)]
 
+    """
     origine_1 = 'OWS'
     paths_1 = list()
     origine_2 = 'EWS'
@@ -81,6 +82,18 @@ if __name__ == "__main__":
 
     print(risk_values)
     print(max(risk_values))
+    """
+
+    node_source = 'OWS'
+    paths = ut.get_paths(graph, node_source)
+    risk_paths = list()
+
+    for path in paths:
+        risk_paths.append(ut.get_path_risk(graph, path))
+
+    index_max_risk_path = risk_paths.index(max(risk_paths))
+
+    print(paths[index_max_risk_path])
 
     # Da modificare 
     """
