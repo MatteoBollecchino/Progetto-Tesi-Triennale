@@ -50,14 +50,13 @@ class Utils:
         return max(risk_values)
     
     # Restituisce il path che tra tutti ha il rischio maggiore associato
-    def get_maximum_risk_path(graph: nx.DiGraph, node_source: str) -> list:
-        paths = Utils.get_paths_from_source(graph, node_source)
-        risk_paths = list()
+    def get_maximum_risk_path(graph: nx.DiGraph, paths: list) -> list:
+        risk_list = list()
 
         for path in paths:
-            risk_paths.append(Utils.get_path_risk(graph, path))
+            risk_list.append(Utils.get_path_risk(graph, path))
 
-        index_max_risk_path = risk_paths.index(max(risk_paths))
+        index_max_risk_path = risk_list.index(max(risk_list))
 
         return paths[index_max_risk_path]
     

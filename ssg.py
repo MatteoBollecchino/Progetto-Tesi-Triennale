@@ -23,6 +23,8 @@ class StackelbergSecurityGameEnv(gym.Env):
         # all_paths ha tipo: lista di liste
         all_paths = ut.get_all_paths(self.graph, self.source_list)
 
+        maximum_risk_path = ut.get_maximum_risk_path(graph, all_paths)
+
         # Reward matrix: righe = target, colonne = [reward if defended, reward if attacked]
         self.defender_rewards = np.array([[1, -10], [1, -5], [1, -1]])  # esempio
         self.attacker_rewards = np.array([[-1, 10], [-1, 5], [-1, 1]])

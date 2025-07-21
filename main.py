@@ -52,9 +52,9 @@ if __name__ == "__main__":
     countermeasures = [(500,0.2)]
 
     # print(ut.get_paths_from_source(graph, 'OWS'))
-    # print(ut.get_maximum_risk_path(graph, 'OWS'))
+    print(ut.get_maximum_risk_path(graph, ut.get_all_paths(graph, source_list)))
 
-    print(ut.get_all_paths(graph, source_list))
+    # print(ut.get_all_paths(graph, source_list))
 
     p1 = ut.get_paths_from_source(graph, 'OWS')
     p2 = ut.get_all_paths(graph, ['OWS'])
