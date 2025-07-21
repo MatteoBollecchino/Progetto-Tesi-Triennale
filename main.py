@@ -49,7 +49,9 @@ if __name__ == "__main__":
 
     source_list = ['OWS', 'EWS']
     budget_defender = 10000
-    countermeasures = [(500,0.2)]
+    
+    # devono essere quartuple? (costo, efficacia sull'arco, arco = nodo origine + nodo destinazione)
+    countermeasures = [(500,0.2), (100,0.08), (214,0.15), (574, 0.38), (158, 0.24)]
 
     # print(ut.get_paths_from_source(graph, 'OWS'))
     print(ut.get_maximum_risk_path(graph, ut.get_all_paths(graph, source_list)))
