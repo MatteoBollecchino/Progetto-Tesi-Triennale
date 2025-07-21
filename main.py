@@ -47,11 +47,18 @@ if __name__ == "__main__":
     graph.nodes['SFTPS']['impact'] = 6
     graph.nodes['RAS']['impact'] = 8
 
-    budget_difensore = 10000
-    contromisure = [(500,0.2)]
+    source_list = ['OWS', 'EWS']
+    budget_defender = 10000
+    countermeasures = [(500,0.2)]
 
-    print(ut.get_paths(graph, 'OWS'))
-    print(ut.get_maximum_risk_path(graph, 'OWS'))
+    # print(ut.get_paths_from_source(graph, 'OWS'))
+    # print(ut.get_maximum_risk_path(graph, 'OWS'))
+
+    print(ut.get_all_paths(graph, source_list))
+
+    p1 = ut.get_paths_from_source(graph, 'OWS')
+    p2 = ut.get_all_paths(graph, ['OWS'])
+
 
     # Da modificare 
     """
