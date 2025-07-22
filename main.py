@@ -50,17 +50,24 @@ if __name__ == "__main__":
     source_list = ['OWS', 'EWS']
     budget_defender = 10000
     
-    # devono essere quartuple? (costo, efficacia sull'arco, arco = nodo origine + nodo destinazione)
+    # devono essere quartuple? (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
     countermeasures = [(500,0.2), (100,0.08), (214,0.15), (574, 0.38), (158, 0.24)]
 
     # print(ut.get_paths_from_source(graph, 'OWS'))
-    print(ut.get_maximum_risk_path(graph, ut.get_all_paths(graph, source_list)))
+    # print(ut.get_maximum_risk_path(graph, ut.get_all_paths(graph, source_list)))
 
-    # print(ut.get_all_paths(graph, source_list))
+    all_paths = ut.get_all_paths(graph, source_list)
+    
+    attacker_rewards = list()
 
-    p1 = ut.get_paths_from_source(graph, 'OWS')
-    p2 = ut.get_all_paths(graph, ['OWS'])
+    for path in all_paths:
+        attacker_rewards.append([path, ut.get_path_risk(graph, path)])
 
+    #print(attacker_rewards)
+    for path in attacker_rewards:
+        print(path)
+
+    print(ut.get_maximum_risk_path(graph, all_paths))
 
     # Da modificare 
     """
