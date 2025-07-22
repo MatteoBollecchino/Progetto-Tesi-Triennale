@@ -1,5 +1,4 @@
 import ssg as ssg
-import GrafoPesato as gp
 import numpy as np
 import networkx as nx
 from utils import Utils as ut
@@ -48,10 +47,12 @@ if __name__ == "__main__":
     graph.nodes['RAS']['impact'] = 8
 
     source_list = ['OWS', 'EWS']
-    budget_defender = 10000
+    budget_defender = 5000
     
     # devono essere quartuple? (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
-    countermeasures = [(500,0.2), (100,0.08), (214,0.15), (574, 0.38), (158, 0.24)]
+    countermeasures = [(500, 0.2,'OWS','EWS'), (100, 0.08,'OWS','S3'), (214, 0.15,'S3','SS'), 
+                       (574, 0.38,'MHS','SS'), (710, 0.24,'F','AS'), (632, 0.17,'F','RAS'),
+                       (1542, 0.41,'AS','PMS'), (2358, 0.29,'AS','SUS')]
 
     # print(ut.get_paths_from_source(graph, 'OWS'))
     # print(ut.get_maximum_risk_path(graph, ut.get_all_paths(graph, source_list)))

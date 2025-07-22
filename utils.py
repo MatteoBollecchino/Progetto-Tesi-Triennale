@@ -1,6 +1,5 @@
 import numpy as np
 import networkx as nx 
-import random
 
 class Utils:
     # Restituisce tutti i path che hanno origine in 'source'
@@ -47,6 +46,7 @@ class Utils:
             afr = graph.get_edge_data(node,successor)['weight']
             risk_values.append(Utils.get_node_risk(graph.nodes[node], afr))
 
+        # si restituisce il max o la somma dei valori in risk_values?
         return max(risk_values)
     
     # Restituisce il path che tra tutti ha il rischio maggiore associato

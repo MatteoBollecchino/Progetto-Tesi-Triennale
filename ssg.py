@@ -29,7 +29,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         # Si mantiene solo il reward dell'attaccante poiché il gioco è a somma zero
         # Reward matrix: righe = target, colonne = [reward if defended, reward if attacked]
         # self.attacker_rewards = self.maximum_risk_path ????????
-        self.attacker_rewards = np.array([[-1, 10], [-1, 5], [-1, 1]])
+        # self.attacker_rewards = np.array([[-1, 10], [-1, 5], [-1, 1]])
 
         # lista di liste (formate da 2 elementi: path + rischio del path)
         self.attacker_rewards = list()
