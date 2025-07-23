@@ -49,10 +49,10 @@ if __name__ == "__main__":
     source_list = ['OWS', 'EWS']
     budget_defender = 5000
     
-    # devono essere quartuple? (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
-    countermeasures = [(500, 0.2,'OWS','EWS'), (100, 0.08,'OWS','S3'), (214, 0.15,'S3','SS'), 
-                       (574, 0.38,'MHS','SS'), (710, 0.24,'F','AS'), (632, 0.17,'F','RAS'),
-                       (1542, 0.41,'AS','PMS'), (2358, 0.29,'AS','SUS')]
+    # devono essere quartuple (liste di 4 elementi) ? (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
+    countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'OWS','S3'], [214, 0.15,'S3','SS'], 
+                       [574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'],
+                       [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
 
     # print(ut.get_paths_from_source(graph, 'OWS'))
     # print(ut.get_maximum_risk_path(graph, ut.get_all_paths(graph, source_list)))
