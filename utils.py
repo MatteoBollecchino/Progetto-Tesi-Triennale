@@ -61,5 +61,7 @@ class Utils:
         return paths[index_max_risk_path]
     
 
-    def apply_countermeasures():
+    # Restituisce il grafo modificato in seguito all'applicazione delle contromisure 
+    # e la lista di contromisure aggiornata
+    def apply_countermeasures(graph: nx.DiGraph, countermeasures: list) -> tuple[nx.DiGraph, list] :
         pass

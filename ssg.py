@@ -67,6 +67,6 @@ class StackelbergSecurityGameEnv(gym.Env):
             "strategy": strategy
         }
     
-    # Serve all'utente per ripulire l'enviroment
+    # Serve all'utente per ripulire l'enviroment e chiuderlo
     def close(self):
         pass
