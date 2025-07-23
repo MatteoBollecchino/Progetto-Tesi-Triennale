@@ -68,7 +68,7 @@ if __name__ == "__main__":
     for path in attacker_rewards:
         print(path)
 
-    print(ut.get_maximum_risk_path(graph, all_paths))
+    print(ut.get_maximum_risk_path(graph, source_list))
 
     # Da modificare 
     """

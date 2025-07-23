@@ -24,7 +24,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         all_paths = ut.get_all_paths(self.graph, self.source_list)
 
         # cambia dopo che il difensore applica delle contromisure
-        self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, all_paths)
+        self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, source_list)
 
         # Si mantiene solo il reward dell'attaccante poiché il gioco è a somma zero
         # Reward matrix: righe = target, colonne = [reward if defended, reward if attacked]

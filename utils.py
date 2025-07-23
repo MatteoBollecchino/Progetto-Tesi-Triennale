@@ -2,6 +2,7 @@ import numpy as np
 import networkx as nx 
 
 class Utils:
+    # Metodo privato ???
     # Restituisce tutti i path che hanno origine in 'source'
     def get_paths_from_source(graph: nx.DiGraph, node_source: str) -> list:
 
@@ -50,7 +51,9 @@ class Utils:
         return max(risk_values)
     
     # Restituisce il path che tra tutti ha il rischio maggiore associato
-    def get_maximum_risk_path(graph: nx.DiGraph, paths: list) -> list:
+    def get_maximum_risk_path(graph: nx.DiGraph, source_list: list) -> list:
+
+        paths = Utils.get_all_paths(graph, source_list)
         risk_list = list()
 
         for path in paths:
@@ -61,7 +64,29 @@ class Utils:
         return paths[index_max_risk_path]
     
 
-    # Restituisce il grafo modificato in seguito all'applicazione delle contromisure 
+    # Restituisce un booleano che indichi il fatto, o meno, che grafo e contromisure siano state modificate,
+    # il grafo modificato in seguito all'applicazione delle contromisure 
     # e la lista di contromisure aggiornata
-    def apply_countermeasures(graph: nx.DiGraph, countermeasures: list) -> tuple[nx.DiGraph, list] :
+    def apply_countermeasures(graph: nx.DiGraph, source_list:list, countermeasures: list) -> tuple[bool, nx.DiGraph, list] :
+
+        max_risk_path = Utils.get_maximum_risk_path(graph, source_list)
+
+        for i in range(len(max_risk_path)-1):
+            node = max_risk_path[i]
+            successor = max_risk_path[i+1]
+            found, cost, eff = Utils.__search_countermeasure(node, successor)
+
+            # Si ritornano gli elementi inalterati
+            if not found:
+                return False, graph, countermeasures
+            
+            
+
+        pass
+
+    # Restituice i valori che caratterizzano la contromisura (ad esclusione dei nodi che sono già noti)
+    def __search_countermeasure(node_1: str, node_2: str) -> tuple[bool, int, float]:
+        pass
+
+    def __apply_countermeasure():
         pass
