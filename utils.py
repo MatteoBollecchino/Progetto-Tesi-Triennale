@@ -60,3 +60,6 @@ class Utils:
 
         return paths[index_max_risk_path]
     
+
+    def apply_countermeasures():
+        pass

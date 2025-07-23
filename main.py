@@ -78,9 +78,8 @@ if __name__ == "__main__":
     
     # esempio: proteggere i target 0,1,2 con queste probabilità
     strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)
+
+    # strategy nel nostro caso corrisponderà all'applicazione delle contromisure -> strategy = grafo aggiornato
     obs, reward, done, _, info = env.step(strategy)
 
-    print("Reward Difensore:", reward)
-    print("Target Attaccato:", info["target_attacked"])
-    print("Strategia Normalizzata:", info["strategy"])
     """

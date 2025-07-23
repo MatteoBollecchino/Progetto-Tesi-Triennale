@@ -66,3 +66,7 @@ class StackelbergSecurityGameEnv(gym.Env):
             "target_attacked": target_attacked,
             "strategy": strategy
         }
+    
+    # Serve all'utente per ripulire l'enviroment
+    def close(self):
+        pass
