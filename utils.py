@@ -16,6 +16,7 @@ class Utils:
         return paths
     
     # Restituisce tutti i path che partono da tutti i nodi in source_list
+    @staticmethod
     def get_all_paths(graph: nx.DiGraph, source_list: list) -> list:
 
         paths = list()
@@ -28,6 +29,7 @@ class Utils:
     
     # Metodo per la traduzione della tabella del paper del lollo
     # node_source -> nodo dal quale esce l'arco, afr -> probabilità arco uscente
+    @staticmethod
     def get_node_risk(node_source: str, afr: float) -> float:
         impact_norm = (node_source['impact'] - 1) / 9
 
@@ -35,6 +37,7 @@ class Utils:
         return round(afr * 0.6 + impact_norm * 0.4, 4)
 
     # Restituisce il rischio del path passato per parametro
+    @staticmethod
     def get_path_risk(graph: nx.DiGraph, path: list) -> float:
         risk_values = list()
 
@@ -52,6 +55,7 @@ class Utils:
         return max(risk_values)
     
     # Restituisce il path che tra tutti ha il rischio maggiore associato
+    @staticmethod
     def get_maximum_risk_path(graph: nx.DiGraph, source_list: list) -> list:
 
         paths = Utils.get_all_paths(graph, source_list)
@@ -69,6 +73,7 @@ class Utils:
     # Restituisce un booleano che indichi il fatto, o meno, che grafo e contromisure siano state modificate,
     # il grafo modificato in seguito all'applicazione delle contromisure 
     # e la lista di contromisure aggiornata
+    @staticmethod
     def apply_countermeasures(graph: nx.DiGraph, source_list:list, countermeasures: list) -> tuple[bool, nx.DiGraph, list] :
 
         max_risk_path = Utils.get_maximum_risk_path(graph, source_list)
@@ -94,6 +99,7 @@ class Utils:
         return modified, graph, countermeasures
 
     # Restituice costo ed effcicacia della contromisura (i nodi sono esclusi perché già noti)
+    @staticmethod
     def _search_countermeasure(node_1: str, node_2: str, countermeasures: list) -> tuple[bool, int, float]:
         
         found_list = list()
@@ -115,5 +121,6 @@ class Utils:
 
     # DA TESTARE
     #deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
+    @staticmethod
     def _apply_countermeasure():
         pass

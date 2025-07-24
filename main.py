@@ -56,6 +56,7 @@ if __name__ == "__main__":
 
 
     all_paths = ut.get_all_paths(graph, source_list)
+    print(all_paths)
     
     attacker_rewards = list()
 
@@ -63,6 +64,8 @@ if __name__ == "__main__":
         attacker_rewards.append([path, ut.get_path_risk(graph, path)])
 
     #print(attacker_rewards)
+
+    
 
     print(ut.get_maximum_risk_path(graph, source_list))
 
