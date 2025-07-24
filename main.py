@@ -59,7 +59,11 @@ if __name__ == "__main__":
 
     obs, _ = env.reset()
     
-    #strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)
+    done = False
 
-    # strategy nel nostro caso corrisponderà all'applicazione delle contromisure -> strategy = grafo aggiornato
-    #obs, reward, done, _, info = env.step(strategy)
+    while True:
+        
+        # strategy nel nostro caso corrisponderà all'applicazione delle contromisure -> strategy = grafo aggiornato
+        # obs, reward, done, _, info = env.step(strategy)
+        if done:
+            break

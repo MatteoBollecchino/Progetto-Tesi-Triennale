@@ -37,6 +37,8 @@ class StackelbergSecurityGameEnv(gym.Env):
 
     # DA MODIFICARE
     def step(self, action):
+
+        """
         # Normalizza la strategia del difensore (probabilità)
         strategy = action / np.sum(action)
 
@@ -60,6 +62,12 @@ class StackelbergSecurityGameEnv(gym.Env):
             "target_attacked": target_attacked,
             "strategy": strategy
         }
+        """
+        # Strategia difensore
+
+        # L'attaccante osserva la strategia e sceglie il miglior target
+
+        # Calcolo del reward dell'attaccante
     
     # Serve all'utente per ripulire l'enviroment e chiuderlo
     def close(self):
