@@ -102,7 +102,7 @@ class Utils:
                 return False, graph, countermeasure, budget
             
             # Modifica grafo
-            reduction = graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1]
+            reduction = round(graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1], 4)
             graph[countermeasure[2]][countermeasure[3]]['weight'] = graph[countermeasure[2]][countermeasure[3]]['weight'] - reduction
 
             # Modifica lista contromisure
