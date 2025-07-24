@@ -75,7 +75,24 @@ class TestUtils(unittest.TestCase):
 
         self.assertEqual(max_risk_path, expected_max_risk_path)
 
-    def test__search_countermeasure():
+    def test__search_countermeasure(self):
+        
+        found, cost, efficiency = self.ut._search_countermeasure('OWS', 'S3', self.countermeasures)
+
+        self.assertTrue(found)
+        self.assertEqual(cost, 100)
+        self.assertEqual(efficiency, 0.08)
+
+        found, cost, efficiency = self.ut._search_countermeasure('EWS', 'OWS', self.countermeasures)
+
+        self.assertFalse(found)
+        self.assertEqual(cost, 0)
+        self.assertEqual(efficiency, 0)
+
+    def test__apply_countermeasure(self):
+        pass
+
+    def test_apply_countermeasure(self):
         pass
 
 if __name__ == "__main__":
