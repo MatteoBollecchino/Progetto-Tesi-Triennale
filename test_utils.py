@@ -2,7 +2,6 @@ import unittest
 import utils as ut
 import networkx as nx
 
-# DA VALUTARE SE TENERE O MENO
 class TestUtils(unittest.TestCase):
 
     def setUp(self):
@@ -57,17 +56,27 @@ class TestUtils(unittest.TestCase):
     def test_get_node_risk(self):
 
         risk = self.ut.get_node_risk(self.graph.nodes['MHS'], 0.40)
-        excepted_risk = 0.3733
+        expected_risk = 1.60
 
-        self.assertEqual(risk, excepted_risk)
+        self.assertEqual(risk, expected_risk)
 
-    # DA MODIFICARE
-    def test_path_node_risk(self):
+    def test_get_path_node_risk(self):
 
-        risk = self.ut.get_node_risk(self.graph.nodes['MHS'], 0.40)
-        excepted_risk = 0.3733
+        path = ['EWS', 'OWS', 'S3', 'SS', 'MHS']
+        risk = self.ut.get_path_risk(self.graph, path)
+        expected_risk = 2.96
 
-        self.assertEqual(risk, excepted_risk)
+        self.assertEqual(risk, expected_risk)
+
+    def test_get_maximum_risk_path(self):
+        
+        max_risk_path = self.ut.get_maximum_risk_path(self.graph, self.source_list)
+        expected_max_risk_path = ['OWS', 'EWS', 'S3', 'SS', 'MHS']
+
+        self.assertEqual(max_risk_path, expected_max_risk_path)
+
+    def test__search_countermeasure():
+        pass
 
 if __name__ == "__main__":
     unittest.main()

@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
 
     all_paths = ut.get_all_paths(graph, source_list)
-    print(all_paths)
+    # print(all_paths)
     
     attacker_rewards = list()
 
@@ -65,11 +65,10 @@ if __name__ == "__main__":
 
     #print(attacker_rewards)
 
-    
-
     print(ut.get_maximum_risk_path(graph, source_list))
 
     print(ut.apply_countermeasures(graph, source_list, countermeasures))
+    
     # Da modificare 
     """
     env = ssg.StackelbergSecurityGameEnv(n_targets=3)

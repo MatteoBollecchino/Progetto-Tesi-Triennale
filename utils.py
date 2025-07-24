@@ -31,10 +31,10 @@ class Utils:
     # node_source -> nodo dal quale esce l'arco, afr -> probabilità arco uscente
     @staticmethod
     def get_node_risk(node_source: str, afr: float) -> float:
-        impact_norm = (node_source['impact'] - 1) / 9
 
-        # oppure (impact/10 + afr)/2
-        return round(afr * 0.6 + impact_norm * 0.4, 4)
+        impact = node_source['impact']
+
+        return round(afr * impact, 4)
 
     # Restituisce il rischio del path passato per parametro
     @staticmethod
