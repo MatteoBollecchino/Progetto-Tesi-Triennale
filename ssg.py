@@ -12,12 +12,6 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.budget_defender = budget_defender # intero
         self.countermeasures = countermeasures # liste di quartuple (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
         self.n_targets = graph.number_of_nodes()
-        
-        # Difensore: distribuzione di probabilità sulla protezione dei target
-        # self.action_space = spaces.Box(low=0, high=1, shape=(self.n_targets,), dtype=np.float32)
-        
-        # Osservazione fittizia (non è rilevante in SSG statico)
-        # self.observation_space = spaces.Box(low=0, high=1, shape=(self.n_targets,), dtype=np.float32)
 
         # tutti i path che hanno origine da OWS e da EWS -> tutti i possibili path di attacco
         # all_paths ha tipo: lista di liste
@@ -27,9 +21,6 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, source_list)
 
         # Si mantiene solo il reward dell'attaccante poiché il gioco è a somma zero
-        # Reward matrix: righe = target, colonne = [reward if defended, reward if attacked]
-        # self.attacker_rewards = self.maximum_risk_path ????????
-        # self.attacker_rewards = np.array([[-1, 10], [-1, 5], [-1, 1]])
 
         # lista di liste (formate da 2 elementi: path + rischio del path)
         self.attacker_rewards = list()

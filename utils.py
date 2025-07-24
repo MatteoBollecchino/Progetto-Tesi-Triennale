@@ -2,7 +2,6 @@ import numpy as np
 import networkx as nx 
 
 class Utils:
-    # Metodo privato ???
     # Restituisce tutti i path che hanno origine in 'source'
     @staticmethod
     def get_paths_from_source(graph: nx.DiGraph, node_source: str) -> list:
