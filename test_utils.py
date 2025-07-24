@@ -53,6 +53,13 @@ class TestUtils(unittest.TestCase):
                       ['EWS', 'S3', 'SS', 'MHS'], ['EWS', 'OWS', 'S3', 'MHS', 'SS'], ['EWS', 'OWS', 'S3', 'SS'], 
                       ['EWS', 'S3', 'MHS', 'SS'], ['EWS', 'S3', 'SS']]
         self.assertCountEqual(all_paths, test_paths)
+    
+    def test_get_node_risk(self):
+
+        risk = self.ut.get_node_risk(self.graph.nodes['MHS'], 0.40)
+        excepted_risk = 0.3733
+
+        self.assertEqual(risk, excepted_risk)
 
 if __name__ == "__main__":
     unittest.main()
