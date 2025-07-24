@@ -61,5 +61,13 @@ class TestUtils(unittest.TestCase):
 
         self.assertEqual(risk, excepted_risk)
 
+    # DA MODIFICARE
+    def test_path_node_risk(self):
+
+        risk = self.ut.get_node_risk(self.graph.nodes['MHS'], 0.40)
+        excepted_risk = 0.3733
+
+        self.assertEqual(risk, excepted_risk)
+
 if __name__ == "__main__":
     unittest.main()
