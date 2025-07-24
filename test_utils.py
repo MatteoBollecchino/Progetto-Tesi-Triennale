@@ -77,17 +77,15 @@ class TestUtils(unittest.TestCase):
 
     def test__search_countermeasure(self):
         
-        found, cost, efficiency = self.ut._search_countermeasure('OWS', 'S3', self.countermeasures)
+        found, countermeasure = self.ut._search_countermeasure('OWS', 'S3', self.countermeasures)
 
         self.assertTrue(found)
-        self.assertEqual(cost, 100)
-        self.assertEqual(efficiency, 0.08)
+        self.assertEqual(countermeasure, [100, 0.08,'OWS','S3'])
 
-        found, cost, efficiency = self.ut._search_countermeasure('EWS', 'OWS', self.countermeasures)
+        found, countermeasure = self.ut._search_countermeasure('EWS', 'OWS', self.countermeasures)
 
         self.assertFalse(found)
-        self.assertEqual(cost, 0)
-        self.assertEqual(efficiency, 0)
+        self.assertEqual(countermeasure, None)
 
     def test__apply_countermeasure(self):
         pass

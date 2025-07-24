@@ -12,9 +12,8 @@ class Utils:
         for node in graph.nodes:
             target = node
             simple_paths = list(nx.all_simple_paths(graph, source=node_source, target=target))
-            supp_list = list(filter(lambda x: len(x) != 1, simple_paths))
 
-            paths = paths + supp_list
+            paths = paths + list(filter(lambda x: len(x) != 1, simple_paths))
 
         return paths
     
@@ -73,7 +72,7 @@ class Utils:
     # il grafo modificato in seguito all'applicazione delle contromisure 
     # e la lista di contromisure aggiornata
     @staticmethod
-    def apply_countermeasures(graph: nx.DiGraph, source_list:list, countermeasures: list) -> tuple[bool, nx.DiGraph, list] :
+    def apply_countermeasures(graph: nx.DiGraph, source_list:list, countermeasures: list, budget: int) -> tuple[bool, nx.DiGraph, list, int] :
 
         max_risk_path = Utils.get_maximum_risk_path(graph, source_list)
 
@@ -85,14 +84,15 @@ class Utils:
             print(node)
             successor = max_risk_path[i+1]
             print(successor)
-            found, cost, efficiency = Utils._search_countermeasure(node, successor, countermeasures)
+            found, countermeasure = Utils._search_countermeasure(node, successor, countermeasures)
 
-            print(found, cost, efficiency)
+            # print(found, cost, efficiency)
+
             # Si ritornano gli elementi inalterati
             if not found:
                 continue
             
-            graph, countermeasures = Utils._apply_countermeasure() 
+            # budget, graph, countermeasures = Utils._apply_countermeasure(budget, cost, efficiency, ) 
             modified = True
 
         return modified, graph, countermeasures
@@ -111,12 +111,12 @@ class Utils:
             found = True
         else:
             found = False
-            return found, 0, 0
+            return found, None
 
         # Fra tutte le contromisure trovate si sceglie quella con costo minimo
         countermeasure_min_cost = min(found_list, key=lambda x: x[0])
 
-        return found, countermeasure_min_cost[0], countermeasure_min_cost[1]
+        return found, countermeasure_min_cost
 
     # DA TESTARE
     # deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
