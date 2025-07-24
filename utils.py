@@ -9,6 +9,7 @@ class Utils:
 
         paths = list()
 
+        # Eliminare paths di lunghezza 1
         for node in graph.nodes:
             target = node
             paths = paths + list(nx.all_simple_paths(graph, source=node_source, target=target))
