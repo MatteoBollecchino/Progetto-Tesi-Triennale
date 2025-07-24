@@ -132,10 +132,3 @@ class Utils:
         countermeasure_min_cost = min(found_list, key=lambda x: x[0])
 
         return found, countermeasure_min_cost
-
-    # DA TESTARE
-    # deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
-    # Restituisce il budget rimanente, il grafo modoficato, la lista delle contromisure modificata
-    @staticmethod
-    def _apply_countermeasure(budget: int, countermeasure: list, graph: nx.DiGraph, countermeasures: list) -> tuple[int, nx.DiGraph, list]:
-        pass
