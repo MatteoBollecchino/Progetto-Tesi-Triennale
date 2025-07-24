@@ -116,7 +116,11 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(modified)
         self.assertCountEqual(countermeasures, countermeasures1)
         self.assertEqual(budget, 5000)
-        self.assertCountEqual(graph, graph1)
+        
+        # Date queste contromisure, mi aspetto che il grafo non abbia variazioni
+        matcher = nx.is_isomorphic(graph, graph1,
+            edge_match=nx.algorithms.isomorphism.categorical_edge_match('weight', None))
+        self.assertTrue(matcher)
 
 
 if __name__ == "__main__":
