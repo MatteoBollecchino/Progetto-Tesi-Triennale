@@ -91,7 +91,16 @@ class TestUtils(unittest.TestCase):
         pass
 
     def test_apply_countermeasure(self):
-        pass
+
+        max_risk_path = self.ut.get_maximum_risk_path(self.graph, self.source_list)
+
+        modified, graph, countermeasures, budget = self.ut.apply_countermeasures(self.graph, self.source_list,
+                                                                                 self.countermeasures, self.budget_defender)
+        
+        self.assertTrue(modified)
+        self.assertCountEqual(countermeasures, [[100, 0.08,'OWS','S3'], [574, 0.38,'MHS','SS']])
+        self.assertEqual(budget, 4286)
+        self.assertEqual(graph, self.graph)
 
 if __name__ == "__main__":
     unittest.main()

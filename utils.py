@@ -81,9 +81,9 @@ class Utils:
 
         for i in range(len(max_risk_path)-1):
             node = max_risk_path[i]
-            print(node)
+            # print(node)
             successor = max_risk_path[i+1]
-            print(successor)
+            # print(successor)
             found, countermeasure = Utils._search_countermeasure(node, successor, countermeasures)
 
             # print(found, cost, efficiency)
@@ -92,10 +92,25 @@ class Utils:
             if not found:
                 continue
             
-            # budget, graph, countermeasures = Utils._apply_countermeasure(budget, cost, efficiency, ) 
+            # budget, graph, countermeasures = Utils._apply_countermeasure(budget, countermeasure, graph, countermeasures) 
+            new_budget = budget - countermeasure[0]
+            
+            # Controllo sul budget
+            if new_budget >= 0:
+                budget = new_budget
+            else:
+                return False, graph, countermeasure, budget
+            
+            # Modifica grafo
+            reduction = graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1]
+            graph[countermeasure[2]][countermeasure[3]]['weight'] = graph[countermeasure[2]][countermeasure[3]]['weight'] - reduction
+
+            # Modifica lista contromisure
+            countermeasures.remove(countermeasure)
+            
             modified = True
 
-        return modified, graph, countermeasures
+        return modified, graph, countermeasures, budget
 
     # Restituice costo ed effcicacia della contromisura (i nodi sono esclusi perché già noti)
     @staticmethod
@@ -122,7 +137,5 @@ class Utils:
     # deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
     # Restituisce il budget rimanente, il grafo modoficato, la lista delle contromisure modificata
     @staticmethod
-    def _apply_countermeasure(budget: int, graph: nx.DiGraph, countermeasures: list) -> tuple[int, nx.DiGraph, list]:
-
-
+    def _apply_countermeasure(budget: int, countermeasure: list, graph: nx.DiGraph, countermeasures: list) -> tuple[int, nx.DiGraph, list]:
         pass
