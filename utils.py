@@ -99,7 +99,7 @@ class Utils:
             if new_budget >= 0:
                 budget = new_budget
             else:
-                return False, graph, countermeasure, budget
+                continue
             
             # Modifica grafo
             reduction = round(graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1], 4)

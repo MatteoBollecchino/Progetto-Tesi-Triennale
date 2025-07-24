@@ -87,7 +87,7 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(found)
         self.assertEqual(countermeasure, None)
 
-    def test_apply_countermeasure(self):
+    def test_apply_countermeasure_True(self):
 
         graph1 = self.graph.copy()
         modified, graph, countermeasures, budget = self.ut.apply_countermeasures(self.graph, self.source_list,
@@ -96,7 +96,27 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(modified)
         self.assertCountEqual(countermeasures, [[100, 0.08,'OWS','S3'], [574, 0.38,'MHS','SS']])
         self.assertEqual(budget, 4286)
-        self.assertEqual(graph, self.graph)
+        
+        # Con i seguenti controlli si verifica che il grafo venga effettivamente modificato dal metodo
+        matcher = nx.is_isomorphic(graph, self.graph,
+            edge_match=nx.algorithms.isomorphism.categorical_edge_match('weight', None))
+        self.assertTrue(matcher)
+
+        matcher = nx.is_isomorphic(graph, graph1,
+            edge_match=nx.algorithms.isomorphism.categorical_edge_match('weight', None))
+        self.assertFalse(matcher)
+
+    def test_apply_countermeasure_False(self):
+
+        graph1 = self.graph.copy()
+        countermeasures1 = [[710, 0.24,'F','AS'], [632, 0.17,'F','RAS'], [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
+        modified, graph, countermeasures, budget = self.ut.apply_countermeasures(self.graph, self.source_list,
+                                                                                 countermeasures1, self.budget_defender)
+        
+        self.assertFalse(modified)
+        self.assertCountEqual(countermeasures, countermeasures1)
+        self.assertEqual(budget, 5000)
+        self.assertCountEqual(graph, graph1)
 
 
 if __name__ == "__main__":
