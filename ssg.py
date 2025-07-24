@@ -12,7 +12,8 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.source_list = source_list # Lista nodi sorgente
         self.budget_defender = budget_defender # intero
         self.countermeasures = countermeasures # liste di quartuple (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
-        self.n_targets = graph.number_of_nodes()
+        self.n_targets = graph.number_of_nodes() # da eliminare nella versione finale
+        self.remaining_countermeasures = list() # lista delle contromisure rimanenti alla fine del gioco
 
         # tutti i path che hanno origine da OWS e da EWS -> tutti i possibili path di attacco
         # all_paths ha tipo: lista di liste

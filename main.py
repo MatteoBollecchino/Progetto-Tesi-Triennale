@@ -54,31 +54,12 @@ if __name__ == "__main__":
                        [574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'],
                        [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
 
-
-    all_paths = ut.get_all_paths(graph, source_list)
-    # print(ut.get_paths_from_source(graph, 'OWS'))
-    
-    attacker_rewards = list()
-
-    for path in all_paths:
-        attacker_rewards.append([path, ut.get_path_risk(graph, path)])
-
-    # print(attacker_rewards)
-
-    print(ut.get_maximum_risk_path(graph, source_list))
-
-    # print(ut.apply_countermeasures(graph, source_list, countermeasures))
-
     # Da modificare 
-    """
-    env = ssg.StackelbergSecurityGameEnv(n_targets=3)
+    env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures)
 
     obs, _ = env.reset()
     
-    # esempio: proteggere i target 0,1,2 con queste probabilità
-    strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)
+    #strategy = np.array([0.5, 0.3, 0.2], dtype=np.float32)
 
     # strategy nel nostro caso corrisponderà all'applicazione delle contromisure -> strategy = grafo aggiornato
-    obs, reward, done, _, info = env.step(strategy)
-
-    """
+    #obs, reward, done, _, info = env.step(strategy)
