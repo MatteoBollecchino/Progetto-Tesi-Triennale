@@ -8,10 +8,13 @@ class Utils:
 
         paths = list()
 
-        # Eliminare paths di lunghezza 1
+        # Non si considerano paths di lunghezza 1
         for node in graph.nodes:
             target = node
-            paths = paths + list(nx.all_simple_paths(graph, source=node_source, target=target))
+            simple_paths = list(nx.all_simple_paths(graph, source=node_source, target=target))
+            supp_list = list(filter(lambda x: len(x) != 1, simple_paths))
+
+            paths = paths + supp_list
 
         return paths
     
@@ -40,10 +43,6 @@ class Utils:
     @staticmethod
     def get_path_risk(graph: nx.DiGraph, path: list) -> float:
         risk_values = list()
-
-        # Path di lunghezza 1 = loop
-        if len(path) == 1:
-            return 0
 
         for i in range(len(path)-1):
             node = path[i]
@@ -93,7 +92,7 @@ class Utils:
             if not found:
                 continue
             
-            # graph, countermeasures = Utils._apply_countermeasure() 
+            graph, countermeasures = Utils._apply_countermeasure() 
             modified = True
 
         return modified, graph, countermeasures
@@ -120,7 +119,10 @@ class Utils:
         return found, countermeasure_min_cost[0], countermeasure_min_cost[1]
 
     # DA TESTARE
-    #deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
+    # deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
+    # Restituisce il budget rimanente, il grafo modoficato, la lista delle contromisure modificata
     @staticmethod
     def _apply_countermeasure(budget: int, graph: nx.DiGraph, countermeasures: list) -> tuple[int, nx.DiGraph, list]:
+
+
         pass

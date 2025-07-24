@@ -38,16 +38,16 @@ class TestUtils(unittest.TestCase):
     def test_get_paths_from_source(self):
 
         all_paths = self.ut.get_paths_from_source(self.graph, 'S3')
-        test_paths = [['S3'], ['S3', 'MHS'], ['S3', 'SS'], ['S3', 'MHS', 'SS'], ['S3', 'SS', 'MHS']]
+        test_paths = [['S3', 'MHS'], ['S3', 'SS'], ['S3', 'MHS', 'SS'], ['S3', 'SS', 'MHS']]
         self.assertCountEqual(all_paths, test_paths)
 
     def test_get_all_paths(self):
 
         all_paths = self.ut.get_all_paths(self.graph, self.source_list)
-        test_paths = [['OWS', 'EWS'], ['OWS'], ['OWS', 'EWS', 'S3'], ['OWS', 'S3'], ['OWS', 'EWS', 'S3', 'MHS'], 
+        test_paths = [['OWS', 'EWS'], ['OWS', 'EWS', 'S3'], ['OWS', 'S3'], ['OWS', 'EWS', 'S3', 'MHS'], 
                       ['OWS', 'EWS', 'S3', 'SS', 'MHS'], ['OWS', 'S3', 'MHS'], ['OWS', 'S3', 'SS', 'MHS'], 
                       ['OWS', 'EWS', 'S3', 'MHS', 'SS'], ['OWS', 'EWS', 'S3', 'SS'], ['OWS', 'S3', 'MHS', 'SS'], 
-                      ['OWS', 'S3', 'SS'],['EWS'], ['EWS', 'OWS'], ['EWS', 'OWS', 'S3'], ['EWS', 'S3'], 
+                      ['OWS', 'S3', 'SS'], ['EWS', 'OWS'], ['EWS', 'OWS', 'S3'], ['EWS', 'S3'], 
                       ['EWS', 'OWS', 'S3', 'MHS'], ['EWS', 'OWS', 'S3', 'SS', 'MHS'], ['EWS', 'S3', 'MHS'], 
                       ['EWS', 'S3', 'SS', 'MHS'], ['EWS', 'OWS', 'S3', 'MHS', 'SS'], ['EWS', 'OWS', 'S3', 'SS'], 
                       ['EWS', 'S3', 'MHS', 'SS'], ['EWS', 'S3', 'SS']]
