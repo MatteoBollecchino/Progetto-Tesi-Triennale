@@ -122,5 +122,5 @@ class Utils:
     # DA TESTARE
     #deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
     @staticmethod
-    def _apply_countermeasure():
+    def _apply_countermeasure(budget: int, graph: nx.DiGraph, countermeasures: list) -> tuple[int, nx.DiGraph, list]:
         pass

@@ -6,7 +6,7 @@ from utils import Utils as ut
 
 class StackelbergSecurityGameEnv(gym.Env):
     def __init__(self, graph: nx.DiGraph, source_list: list, budget_defender : int, countermeasures: list):
-        
+
         super(StackelbergSecurityGameEnv, self).__init__()
         self.graph = graph # DiGraph
         self.source_list = source_list # Lista nodi sorgente
@@ -34,6 +34,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         super().reset(seed=seed)
         return np.zeros(self.n_targets, dtype=np.float32), {}
 
+    # DA MODIFICARE
     def step(self, action):
         # Normalizza la strategia del difensore (probabilità)
         strategy = action / np.sum(action)
