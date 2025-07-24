@@ -50,12 +50,10 @@ if __name__ == "__main__":
     budget_defender = 5000
     
     # devono essere quartuple (liste di 4 elementi) ? (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
-    countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'OWS','S3'], [214, 0.15,'S3','SS'], 
+    countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'OWS','S3'], [214, 0.15,'S3','SS'], [150, 0.21, 'S3', 'SS'],
                        [574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'],
                        [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
 
-    # print(ut.get_paths_from_source(graph, 'OWS'))
-    # print(ut.get_maximum_risk_path(graph, ut.get_all_paths(graph, source_list)))
 
     all_paths = ut.get_all_paths(graph, source_list)
     
@@ -65,11 +63,10 @@ if __name__ == "__main__":
         attacker_rewards.append([path, ut.get_path_risk(graph, path)])
 
     #print(attacker_rewards)
-    for path in attacker_rewards:
-        print(path)
 
     print(ut.get_maximum_risk_path(graph, source_list))
 
+    print(ut.apply_countermeasures(graph, source_list, countermeasures))
     # Da modificare 
     """
     env = ssg.StackelbergSecurityGameEnv(n_targets=3)

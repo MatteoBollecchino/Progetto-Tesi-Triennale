@@ -4,6 +4,7 @@ import networkx as nx
 class Utils:
     # Metodo privato ???
     # Restituisce tutti i path che hanno origine in 'source'
+    @staticmethod
     def get_paths_from_source(graph: nx.DiGraph, node_source: str) -> list:
 
         paths = list()
@@ -64,7 +65,7 @@ class Utils:
         return paths[index_max_risk_path]
     
 
-    # DA TESTARE
+    # SEMBRA FUNZIONARE
     # Restituisce un booleano che indichi il fatto, o meno, che grafo e contromisure siano state modificate,
     # il grafo modificato in seguito all'applicazione delle contromisure 
     # e la lista di contromisure aggiornata
@@ -72,33 +73,40 @@ class Utils:
 
         max_risk_path = Utils.get_maximum_risk_path(graph, source_list)
 
+        # Viene posto a True in caso venga applicata almeno una contromisura
+        modified = False
+
         for i in range(len(max_risk_path)-1):
             node = max_risk_path[i]
+            print(node)
             successor = max_risk_path[i+1]
-            found, cost, efficiency = Utils.__search_countermeasure(node, successor, countermeasures)
+            print(successor)
+            found, cost, efficiency = Utils._search_countermeasure(node, successor, countermeasures)
 
+            print(found, cost, efficiency)
             # Si ritornano gli elementi inalterati
             if not found:
-                return False, graph, countermeasures
+                continue
             
-        graph, countermeasures = Utils.__apply_countermeasure() 
+            # graph, countermeasures = Utils._apply_countermeasure() 
+            modified = True
 
-        return True, graph, countermeasures
+        return modified, graph, countermeasures
 
-    # DA TESTARE
     # Restituice costo ed effcicacia della contromisura (i nodi sono esclusi perché già noti)
-    def __search_countermeasure(node_1: str, node_2: str, countermeasures: list) -> tuple[bool, int, float]:
+    def _search_countermeasure(node_1: str, node_2: str, countermeasures: list) -> tuple[bool, int, float]:
         
         found_list = list()
 
         for countermeasure in countermeasures:
             if countermeasure[2] == node_1 and countermeasure[3] == node_2:
-                found_list.append(list)
+                found_list.append(countermeasure)
 
         if len(found_list) != 0:
             found = True
-
-        found = False
+        else:
+            found = False
+            return found, 0, 0
 
         # Fra tutte le contromisure trovate si sceglie quella con costo minimo
         countermeasure_min_cost = min(found_list, key=lambda x: x[0])
@@ -107,5 +115,5 @@ class Utils:
 
     # DA TESTARE
     #deve includere: controllo budget + modifica del grafo con le contromisure + aggiornamento lista contromisure
-    def __apply_countermeasure():
+    def _apply_countermeasure():
         pass

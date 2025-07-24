@@ -7,6 +7,8 @@ class TestUtils(unittest.TestCase):
 
     def setUp(self):
 
+        self.ut = ut.Utils()
+
         # Aggiunta di nodi e archi
         self.graph = nx.DiGraph()
 
@@ -17,7 +19,6 @@ class TestUtils(unittest.TestCase):
         self.graph.add_edge('OWS', 'S3', weight = 0.57)
         self.graph.add_edge('S3', 'MHS', weight = 0.93)
         self.graph.add_edge('S3', 'SS', weight = 0.71)
-        self.graph.add_edge('S3', 'F', weight = 0.89)
         self.graph.add_edge('MHS', 'SS', weight = 0.40)
         self.graph.add_edge('SS', 'MHS', weight = 0.74)
         
@@ -33,21 +34,12 @@ class TestUtils(unittest.TestCase):
         
         # devono essere quartuple (liste di 4 elementi) ? (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
         self.countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'OWS','S3'], [214, 0.15,'S3','SS'], 
-                        [574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'],
-                        [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
+                                [574, 0.38,'MHS','SS']]
 
-    def test_somma(self):
-        self.assertEqual(self.calc.somma(2, 3), 5)
+    def test_get_paths_from_source(self):
 
-    def test_sottrai(self):
-        self.assertEqual(self.calc.sottrai(5, 2), 3)
-
-    def test_dividi(self):
-        self.assertAlmostEqual(self.calc.dividi(10, 2), 5.0)
-
-    def test_dividi_per_zero(self):
-        with self.assertRaises(ValueError):
-            self.calc.dividi(10, 0)
+        all_paths = self.ut.get_paths_from_source(self.graph, 'S3')
+        self.assertCountEqual(all_paths, [['S3'], ['S3', 'MHS'], ['S3', 'SS'], ['S3', 'MHS', 'SS'], ['S3', 'SS', 'MHS']])
 
 if __name__ == "__main__":
     unittest.main()
