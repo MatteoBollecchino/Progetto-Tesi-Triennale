@@ -77,4 +77,11 @@ class StackelbergSecurityGameEnv(gym.Env):
     
     # Serve all'utente per ripulire l'enviroment e chiuderlo
     def close(self):
-        pass
+        self.graph = None
+        self.source_list = None
+        self.budget_defender = 0
+        self.countermeasures = list()
+        self.n_targets = 0
+        self.remaining_countermeasures = list()
+        self.maximum_risk_path = list()
+        self.attacker_rewards = list()
