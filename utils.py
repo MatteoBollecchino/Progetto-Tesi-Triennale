@@ -1,4 +1,3 @@
-import numpy as np
 import networkx as nx 
 
 class Utils:
@@ -49,7 +48,7 @@ class Utils:
             afr = graph.get_edge_data(node,successor)['weight']
             risk_values.append(Utils.get_node_risk(graph.nodes[node], afr))
 
-        # si restituisce il max o la somma dei valori in risk_values?
+        # Si restituisce il massimo dei valori in risk_values
         return max(risk_values)
     
     # Restituisce il rischio associato al grafo (massimo tra i rischi dei path)
@@ -80,8 +79,8 @@ class Utils:
     
 
     # Restituisce un booleano che indichi il fatto, o meno, che grafo e contromisure siano state modificate,
-    # il grafo modificato in seguito all'applicazione delle contromisure 
-    # e la lista di contromisure aggiornata
+    # il grafo modificato in seguito all'applicazione delle contromisure, la lista di contromisure aggiornata
+    # e il budget rimanente dopo l'applicazione delle contromisure
     @staticmethod
     def apply_countermeasures(graph: nx.DiGraph, source_list:list, countermeasures: list, budget: int) -> tuple[bool, nx.DiGraph, list, int] :
 
@@ -92,18 +91,13 @@ class Utils:
 
         for i in range(len(max_risk_path)-1):
             node = max_risk_path[i]
-            # print(node)
             successor = max_risk_path[i+1]
-            # print(successor)
             found, countermeasure = Utils._search_countermeasure(node, successor, countermeasures)
 
-            # print(found, cost, efficiency)
-
-            # Si ritornano gli elementi inalterati
+            # Si passa all'arco successivo
             if not found:
                 continue
             
-            # budget, graph, countermeasures = Utils._apply_countermeasure(budget, countermeasure, graph, countermeasures) 
             new_budget = budget - countermeasure[0]
             
             # Controllo sul budget

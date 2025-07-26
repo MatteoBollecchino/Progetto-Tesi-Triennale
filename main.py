@@ -1,5 +1,4 @@
 import ssg as ssg
-import numpy as np
 import networkx as nx
 from utils import Utils as ut
 
@@ -54,6 +53,7 @@ if __name__ == "__main__":
                        [574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'],
                        [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
     
+    """
     all = ut.get_all_paths(graph, source_list)
 
     for path in all:
@@ -61,11 +61,15 @@ if __name__ == "__main__":
     
     print()
     print(ut.get_graph_risk(graph, source_list))
+    """
 
     # Da modificare 
     env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures)
 
     obs, _ = env.reset()
+
+    strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
+    print(strategy)
     
     done = False
 

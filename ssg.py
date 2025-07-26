@@ -1,6 +1,4 @@
 import gymnasium as gym
-from gymnasium import spaces
-import numpy as np
 import networkx as nx
 from utils import Utils as ut
 
@@ -33,10 +31,10 @@ class StackelbergSecurityGameEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
-        return np.zeros(self.n_targets, dtype=np.float32), {}
+        return 0, {}
 
     # DA MODIFICARE
-    def step(self, action):
+    def step(self, action) -> tuple[bool, int, int, list]:
 
         """
         # Normalizza la strategia del difensore (probabilità)
@@ -71,6 +69,11 @@ class StackelbergSecurityGameEnv(gym.Env):
 
         # Terminazione gioco: la lista delle contromisure è vuota, il rischio del grafo è sotto una soglia tollerabile 
         done = False  # gioco in più passi
+        remaining_budget = 0
+        new_graph_risk = 0
+        applied_countermeasures = list()
+        
+        return done, new_graph_risk, remaining_budget, applied_countermeasures
     
     # Serve all'utente per ripulire l'enviroment e chiuderlo
     def close(self):
