@@ -68,6 +68,9 @@ class StackelbergSecurityGameEnv(gym.Env):
         # L'attaccante osserva la strategia e sceglie il miglior target
 
         # Calcolo del reward dell'attaccante
+
+        # Terminazione gioco: la lista delle contromisure è vuota, il rischio del grafo è sotto una soglia tollerabile 
+        done = False  # gioco in più passi
     
     # Serve all'utente per ripulire l'enviroment e chiuderlo
     def close(self):

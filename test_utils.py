@@ -60,10 +60,17 @@ class TestUtils(unittest.TestCase):
 
         self.assertEqual(risk, expected_risk)
 
-    def test_get_path_node_risk(self):
+    def test_get_path_risk(self):
 
         path = ['EWS', 'OWS', 'S3', 'SS', 'MHS']
         risk = self.ut.get_path_risk(self.graph, path)
+        expected_risk = 2.96
+
+        self.assertEqual(risk, expected_risk)
+
+    def test_get_graph_risk(self):
+
+        risk = self.ut.get_graph_risk(self.graph, self.source_list)
         expected_risk = 2.96
 
         self.assertEqual(risk, expected_risk)

@@ -52,7 +52,19 @@ class Utils:
         # si restituisce il max o la somma dei valori in risk_values?
         return max(risk_values)
     
-    # Restituisce il path che tra tutti ha il rischio maggiore associato
+    # Restituisce il rischio associato al grafo (massimo tra i rischi dei path)
+    @staticmethod
+    def get_graph_risk(graph: nx.DiGraph, source_list: list) -> int:
+
+        paths = Utils.get_all_paths(graph, source_list)
+        risk_list = list()
+
+        for path in paths:
+            risk_list.append(Utils.get_path_risk(graph, path))
+
+        return max(risk_list)
+    
+    # Restituisce il path che tra tutti ha il rischio maggiore associato (scelta di un attaccante razionale)
     @staticmethod
     def get_maximum_risk_path(graph: nx.DiGraph, source_list: list) -> list:
 
@@ -67,7 +79,6 @@ class Utils:
         return paths[index_max_risk_path]
     
 
-    # SEMBRA FUNZIONARE
     # Restituisce un booleano che indichi il fatto, o meno, che grafo e contromisure siano state modificate,
     # il grafo modificato in seguito all'applicazione delle contromisure 
     # e la lista di contromisure aggiornata
