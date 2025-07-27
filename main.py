@@ -58,10 +58,6 @@ if __name__ == "__main__":
 
     obs, _ = env.reset()
 
-    print(ut.get_maximum_risk_path(graph,source_list))
-    print(ut.get_graph_risk(graph, source_list))
-    print(countermeasures)
-
     """
     all = ut.get_all_paths(graph, source_list)
 
@@ -69,7 +65,6 @@ if __name__ == "__main__":
         print(path)
         print(ut.get_path_risk(graph, path))
         print()
-    """
 
     strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
 
@@ -81,7 +76,6 @@ if __name__ == "__main__":
     print(ut.get_graph_risk(graph, source_list))
     print(countermeasures)
 
-    """
     all = ut.get_all_paths(graph, source_list)
 
     for path in all:
@@ -97,11 +91,16 @@ if __name__ == "__main__":
 
         # strategy nel nostro caso corrisponderà all'applicazione delle contromisure
         # strategy = modified, new_graph, remaining_countermeasures, remaining_budget
+        #print(countermeasures)
+        #print()
+
         strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
 
         done, new_graph_risk, remaining_budget, applied_countermeasures = env.step(strategy)
 
-        done = True
+        print(applied_countermeasures)
+        print()
+
         if done:
             break
 

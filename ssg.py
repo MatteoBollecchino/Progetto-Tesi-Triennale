@@ -11,9 +11,16 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.budget_defender = budget_defender # Intero
 
         # Liste di quartuple (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
-        self.remaining_countermeasures = countermeasures # Lista delle contromisure rimanenti alla fine del gioco
-
+        # Lista delle contromisure rimanenti alla fine del gioco
+        self.remaining_countermeasures = countermeasures.copy() 
+       
         self.risk_threshold = 3 # Soglia di rischio tollerabile
+
+        # Se il rischio non cambia per vari passi del gioco significa che si è raggiunto l'equilibrio
+        self.previous_risk = 0
+        self.counter = 0
+        self.limit_step = 5
+
         self.applied_countermeasures = list() # Lista delle contromisure applicate durante i vari passi
 
         # Cambia dopo che il difensore applica delle contromisure
@@ -27,13 +34,15 @@ class StackelbergSecurityGameEnv(gym.Env):
     def step(self, action) -> tuple[bool, int, int, list]:
 
         done = False  # Gioco in più passi
+
+        self.previous_risk = ut.get_graph_risk(self.graph, self.source_list)
         
         # Strategia difensore = action
         self.graph = action[1] # si aggiorna il grafo
 
-        self.applied_countermeasures = self.remaining_countermeasures + [x for x in self.countermeasures if x not in action[2]]
+        self.applied_countermeasures = self.applied_countermeasures + \
+                                       [x for x in self.remaining_countermeasures if x not in action[2]]
         
-        print(self.applied_countermeasures)
         self.remaining_countermeasures = action[2] # si aggiorna le contromisure disponibili
         self.budget_defender = action[3] # si aggiorna il budget del difensore
 
@@ -42,8 +51,16 @@ class StackelbergSecurityGameEnv(gym.Env):
 
         new_graph_risk = ut.get_graph_risk(self.graph, self.source_list)
 
-        # Terminazione gioco: la lista delle contromisure è vuota, il rischio del grafo è sotto una soglia tollerabile 
-        if (len(self.countermeasures) == 0) or (new_graph_risk <= self.risk_threshold):
+        # Terminazione gioco: 
+        # la lista delle contromisure è vuota, il rischio del grafo è sotto una soglia tollerabile, il budget è terminato
+        if (len(self.remaining_countermeasures) == 0) or (new_graph_risk <= self.risk_threshold) \
+            or (self.budget_defender == 0):
+            done = True
+
+        if self.previous_risk == new_graph_risk:
+            self.counter = self.counter + 1
+
+        if self.counter == self.limit_step:
             done = True
 
         return done, new_graph_risk, self.budget_defender, self.applied_countermeasures
@@ -53,6 +70,9 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.graph = None
         self.source_list = None
         self.budget_defender = 0
-        self.countermeasures = list()
+        self.risk_threshold = 0
+        self.applied_countermeasures = list()
         self.remaining_countermeasures = list()
         self.maximum_risk_path = list()
+        self.previous_risk = 0
+        self.counter = 0
