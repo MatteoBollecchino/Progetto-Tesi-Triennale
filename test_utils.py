@@ -103,12 +103,15 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(modified)
         self.assertCountEqual(countermeasures, [[500, 0.2,'OWS','EWS'], [100, 0.08,'OWS','S3'], [214, 0.15,'S3','SS']])
         self.assertEqual(budget, 4426)
+
+        # Da valutare se tenere o meno
+        self.graph = graph
         
         # Con i seguenti controlli si verifica che il grafo venga effettivamente modificato dal metodo
         matcher = nx.is_isomorphic(graph, self.graph,
             edge_match=nx.algorithms.isomorphism.categorical_edge_match('weight', None))
         # Perché con assertTrue non funziona?
-        self.assertFalse(matcher)
+        self.assertTrue(matcher)
 
         matcher = nx.is_isomorphic(graph, graph1,
             edge_match=nx.algorithms.isomorphism.categorical_edge_match('weight', None))

@@ -86,6 +86,8 @@ class Utils:
 
         max_risk_path = Utils.get_maximum_risk_path(graph, source_list)
 
+        new_graph = graph.copy()
+
         # Viene posto a True in caso venga applicata almeno una contromisura
         modified = False
 
@@ -102,8 +104,7 @@ class Utils:
             previous_risk = Utils.get_graph_risk(graph, source_list)
 
             # Modifica grafo
-            new_graph = graph.copy()
-            reduction = round(graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1], 4)
+            reduction = round(new_graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1], 4)
             new_graph[countermeasure[2]][countermeasure[3]]['weight'] = new_graph[countermeasure[2]][countermeasure[3]]['weight'] - reduction
             
             # Controllo cambiamento rischio
