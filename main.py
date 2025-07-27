@@ -69,8 +69,15 @@ if __name__ == "__main__":
     obs, _ = env.reset()
 
     strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
-    print(strategy)
     
+    all = ut.get_all_paths(graph, source_list)
+
+    for path in all:
+        print(path)
+        print(ut.get_path_risk(graph, path))
+        print()
+    
+    print(ut.get_graph_risk(graph, source_list))
     done = False
 
     """
