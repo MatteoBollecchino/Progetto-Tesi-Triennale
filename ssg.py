@@ -18,7 +18,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         all_paths = ut.get_all_paths(self.graph, self.source_list)
 
         # cambia dopo che il difensore applica delle contromisure
-        self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, source_list)
+        self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, self.source_list)
 
         # Si mantiene solo il reward dell'attaccante poiché il gioco è a somma zero
 
@@ -26,7 +26,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.attacker_rewards = list()
 
         for path in all_paths:
-            self.attacker_rewards.append([path, ut.get_path_risk(graph, path)])
+            self.attacker_rewards.append([path, ut.get_path_risk(self.graph, path)])
 
 
     def reset(self, seed=None, options=None):
@@ -61,9 +61,13 @@ class StackelbergSecurityGameEnv(gym.Env):
             "strategy": strategy
         }
         """
-        # Strategia difensore
+        # Strategia difensore = action
+        self.graph = action[1] # si aggiorna il grafo
+        self.countermeasures = action[2] # si aggiorna le contromisure disponibili
+        self.budget_defender = action[3] # si aggiorna il budget del difensore
 
         # L'attaccante osserva la strategia e sceglie il miglior target
+        self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, self.source_list)
 
         # Calcolo del reward dell'attaccante
 
