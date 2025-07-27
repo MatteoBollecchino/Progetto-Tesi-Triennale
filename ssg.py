@@ -8,26 +8,16 @@ class StackelbergSecurityGameEnv(gym.Env):
         super(StackelbergSecurityGameEnv, self).__init__()
         self.graph = graph # DiGraph
         self.source_list = source_list # Lista nodi sorgente
-        self.budget_defender = budget_defender # intero
-        self.countermeasures = countermeasures # liste di quartuple (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
-        self.n_targets = graph.number_of_nodes() # da eliminare nella versione finale
-        self.remaining_countermeasures = list() # lista delle contromisure rimanenti alla fine del gioco
+        self.budget_defender = budget_defender # Intero
 
-        # tutti i path che hanno origine da OWS e da EWS -> tutti i possibili path di attacco
-        # all_paths ha tipo: lista di liste
-        all_paths = ut.get_all_paths(self.graph, self.source_list)
+        # Liste di quartuple (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
+        self.remaining_countermeasures = countermeasures # Lista delle contromisure rimanenti alla fine del gioco
 
-        # cambia dopo che il difensore applica delle contromisure
+        self.risk_threshold = 3 # Soglia di rischio tollerabile
+        self.applied_countermeasures = list() # Lista delle contromisure applicate durante i vari passi
+
+        # Cambia dopo che il difensore applica delle contromisure
         self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, self.source_list)
-
-        # Si mantiene solo il reward dell'attaccante poiché il gioco è a somma zero
-
-        # lista di liste (formate da 2 elementi: path + rischio del path)
-        self.attacker_rewards = list()
-
-        for path in all_paths:
-            self.attacker_rewards.append([path, ut.get_path_risk(self.graph, path)])
-
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
@@ -36,48 +26,27 @@ class StackelbergSecurityGameEnv(gym.Env):
     # DA MODIFICARE
     def step(self, action) -> tuple[bool, int, int, list]:
 
-        """
-        # Normalizza la strategia del difensore (probabilità)
-        strategy = action / np.sum(action)
-
-        # L'attaccante osserva la strategia e sceglie il miglior target
-        expected_utilities = []
-        for i in range(self.n_targets):
-            prob_defended = strategy[i]
-            u = prob_defended * self.attacker_rewards[i][0] + (1 - prob_defended) * self.attacker_rewards[i][1]
-            expected_utilities.append(u)
+        done = False  # Gioco in più passi
         
-        # Attaccante sceglie il target con reward massimo
-        target_attacked = np.argmax(expected_utilities)
-        prob_defended = strategy[target_attacked]
-
-        # Calcolo del reward per il difensore
-        defender_reward = prob_defended * self.defender_rewards[target_attacked][0] + \
-                          (1 - prob_defended) * self.defender_rewards[target_attacked][1]
-        
-        done = False  # gioco in più passi
-        return np.zeros(self.n_targets, dtype=np.float32), defender_reward, done, False, {
-            "target_attacked": target_attacked,
-            "strategy": strategy
-        }
-        """
         # Strategia difensore = action
         self.graph = action[1] # si aggiorna il grafo
-        self.countermeasures = action[2] # si aggiorna le contromisure disponibili
+
+        self.applied_countermeasures = self.remaining_countermeasures + [x for x in self.countermeasures if x not in action[2]]
+        
+        print(self.applied_countermeasures)
+        self.remaining_countermeasures = action[2] # si aggiorna le contromisure disponibili
         self.budget_defender = action[3] # si aggiorna il budget del difensore
 
-        # L'attaccante osserva la strategia e sceglie il miglior target
+        # L'attaccante osserva la strategia e sceglie il miglior path target possibile
         self.maximum_risk_path = ut.get_maximum_risk_path(self.graph, self.source_list)
 
-        # Calcolo del reward dell'attaccante
+        new_graph_risk = ut.get_graph_risk(self.graph, self.source_list)
 
         # Terminazione gioco: la lista delle contromisure è vuota, il rischio del grafo è sotto una soglia tollerabile 
-        done = False  # gioco in più passi
-        remaining_budget = 0
-        new_graph_risk = 0
-        applied_countermeasures = list()
-        
-        return done, new_graph_risk, remaining_budget, applied_countermeasures
+        if (len(self.countermeasures) == 0) or (new_graph_risk <= self.risk_threshold):
+            done = True
+
+        return done, new_graph_risk, self.budget_defender, self.applied_countermeasures
     
     # Serve all'utente per ripulire l'enviroment e chiuderlo
     def close(self):
@@ -85,7 +54,5 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.source_list = None
         self.budget_defender = 0
         self.countermeasures = list()
-        self.n_targets = 0
         self.remaining_countermeasures = list()
         self.maximum_risk_path = list()
-        self.attacker_rewards = list()
