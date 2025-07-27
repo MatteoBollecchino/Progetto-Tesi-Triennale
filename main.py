@@ -60,6 +60,7 @@ if __name__ == "__main__":
 
     print(ut.get_maximum_risk_path(graph,source_list))
     print(ut.get_graph_risk(graph, source_list))
+    print(countermeasures)
 
     """
     all = ut.get_all_paths(graph, source_list)
@@ -73,9 +74,12 @@ if __name__ == "__main__":
     strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
 
     graph = strategy[1]
+    countermeasures = strategy[2]
 
+    print()
     print(ut.get_maximum_risk_path(graph,source_list))
     print(ut.get_graph_risk(graph, source_list))
+    print(countermeasures)
 
     """
     all = ut.get_all_paths(graph, source_list)
@@ -87,7 +91,6 @@ if __name__ == "__main__":
 
     """
 
-    """
     done = False
 
     while True:
@@ -104,4 +107,3 @@ if __name__ == "__main__":
 
     # Aggiungere chiusura dell'enviroment
     env.close()
-    """

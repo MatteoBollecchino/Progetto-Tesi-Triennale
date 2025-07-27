@@ -94,22 +94,36 @@ class Utils:
             successor = max_risk_path[i+1]
             found, countermeasure = Utils._search_countermeasure(node, successor, countermeasures)
 
-            # Si passa all'arco successivo
+            # Se non si trova una contromisura si passa all'arco successivo
             if not found:
                 continue
+
+            # Rischio prima dell'applicazione delle contromisure
+            previous_risk = Utils.get_graph_risk(graph, source_list)
+
+            # Modifica grafo
+            new_graph = graph.copy()
+            reduction = round(graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1], 4)
+            new_graph[countermeasure[2]][countermeasure[3]]['weight'] = new_graph[countermeasure[2]][countermeasure[3]]['weight'] - reduction
             
+            # Controllo cambiamento rischio
+            changed_risk = Utils.get_graph_risk(new_graph, source_list)
+            
+            # Il rischio non è cambiato, quindi si salta all'arco successivo senza applicare nulla
+            if previous_risk == changed_risk:
+                continue
+            
+            # Se li grafo è cambiato, allora lo si aggiorna effettivamente
+            # In questo modo ci si assicura che le modifiche al grafo siano significative e al prezzo minore possibile
+            graph = new_graph
+        
+            # Modifica budget
             new_budget = budget - countermeasure[0]
-            
-            # Controllo sul budget
             if new_budget >= 0:
                 budget = new_budget
             else:
                 continue
-            
-            # Modifica grafo
-            reduction = round(graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1], 4)
-            graph[countermeasure[2]][countermeasure[3]]['weight'] = graph[countermeasure[2]][countermeasure[3]]['weight'] - reduction
-
+        
             # Modifica lista contromisure
             countermeasures.remove(countermeasure)
             
