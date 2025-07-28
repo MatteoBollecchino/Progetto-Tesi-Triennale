@@ -12,7 +12,7 @@ class StackelbergSecurityGameEnv(gym.Env):
 
         # Liste di quartuple (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
         # Lista delle contromisure rimanenti alla fine del gioco
-        self.remaining_countermeasures = countermeasures.copy() 
+        self.remaining_countermeasures = countermeasures.copy()
        
         self.risk_threshold = 3 # Soglia di rischio tollerabile
 
@@ -38,12 +38,12 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.previous_risk = ut.get_graph_risk(self.graph, self.source_list)
         
         # Strategia difensore = action
-        self.graph = action[1] # si aggiorna il grafo
+        self.graph = action[1].copy() # si aggiorna il grafo
 
         self.applied_countermeasures = self.applied_countermeasures + \
                                        [x for x in self.remaining_countermeasures if x not in action[2]]
         
-        self.remaining_countermeasures = action[2] # si aggiorna le contromisure disponibili
+        self.remaining_countermeasures = action[2].copy() # si aggiorna le contromisure disponibili
         self.budget_defender = action[3] # si aggiorna il budget del difensore
 
         # L'attaccante osserva la strategia e sceglie il miglior path target possibile
@@ -71,8 +71,8 @@ class StackelbergSecurityGameEnv(gym.Env):
         self.source_list = None
         self.budget_defender = 0
         self.risk_threshold = 0
-        self.applied_countermeasures = list()
-        self.remaining_countermeasures = list()
-        self.maximum_risk_path = list()
+        self.applied_countermeasures = None
+        self.remaining_countermeasures = None
+        self.maximum_risk_path = None
         self.previous_risk = 0
         self.counter = 0

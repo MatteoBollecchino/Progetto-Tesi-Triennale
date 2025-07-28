@@ -89,15 +89,22 @@ if __name__ == "__main__":
 
     while True:
 
+        print(ut.get_maximum_risk_path(graph,source_list))
+        print()
+
         # strategy nel nostro caso corrisponderà all'applicazione delle contromisure
         # strategy = modified, new_graph, remaining_countermeasures, remaining_budget
-        #print(countermeasures)
-        #print()
-
         strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
+
+        graph = strategy[1]
 
         done, new_graph_risk, remaining_budget, applied_countermeasures = env.step(strategy)
 
+        budget_defender = remaining_budget
+
+        print(done)
+        print(new_graph_risk)
+        print(remaining_budget)
         print(applied_countermeasures)
         print()
 
