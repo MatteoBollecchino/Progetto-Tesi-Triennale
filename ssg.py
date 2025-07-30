@@ -65,6 +65,10 @@ class StackelbergSecurityGameEnv(gym.Env):
 
         return done, new_graph_risk, self.budget_defender, self.applied_countermeasures
     
+    def get_risk_threshold(self) -> int:
+        
+        return self.risk_threshold
+    
     # Serve all'utente per ripulire l'enviroment e chiuderlo
     def close(self):
         self.graph = None

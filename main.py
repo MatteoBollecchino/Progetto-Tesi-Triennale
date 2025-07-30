@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # liste di 4 elementi : [costo, efficacia sull'arco, nodo_origine, nodo_destinazione]
     countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'EWS','S3'], [356, 0.31,'S3','F'],[214, 0.15,'S3','SS'], 
                        [150, 0.21, 'S3', 'SS'],[574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'], 
-                       [759, 0.26,'F','PMS'], [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
+                       [759, 0.26,'F','PMS'], [542, 0.36,'F','SFTPS'], [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
 
     # Da modificare 
     env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures)
@@ -90,7 +90,6 @@ if __name__ == "__main__":
     while True:
 
         print(ut.get_maximum_risk_path(graph,source_list))
-        print()
 
         # strategy nel nostro caso corrisponderà all'applicazione delle contromisure
         # strategy = modified, new_graph, remaining_countermeasures, remaining_budget
@@ -107,6 +106,9 @@ if __name__ == "__main__":
         print(remaining_budget)
         print(applied_countermeasures)
         print()
+
+        if new_graph_risk <= env.get_risk_threshold():
+            print("Il rischio ottenuto è accettabile")
 
         if done:
             break
