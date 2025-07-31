@@ -49,12 +49,23 @@ if __name__ == "__main__":
     budget_defender = 6000
     
     # liste di 4 elementi : [costo, efficacia sull'arco, nodo_origine, nodo_destinazione]
+
+    """
+    # Caso in cui NON si raggiunge un rischio accettabile
     countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'EWS','S3'], [356, 0.31,'S3','F'],[214, 0.15,'S3','SS'], 
                        [150, 0.21, 'S3', 'SS'],[574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'], 
                        [759, 0.26,'F','PMS'], [542, 0.36,'F','SFTPS'], [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
+    """
+
+    # Caso in cui si raggiunge un rischio accettabile
+    countermeasures = [[500, 0.25,'OWS','EWS'], [100, 0.08,'EWS','S3'], [356, 0.31,'S3','F'],[214, 0.15,'S3','SS'], 
+                       [150, 0.21,'S3','SS'], [574, 0.38,'MHS','SS'], [710, 0.24,'F','AS'], [632, 0.17,'F','RAS'], 
+                       [369, 0.38,'F','RAS'], [759, 0.26,'F','PMS'], [100, 0.19,'F','PMS'], [600, 0.32,'PMS','AS'],
+                       [542, 0.36,'F','SFTPS'], [142, 0.49,'F','SFTPS'], [154, 0.61,'AS','PMS'], [235, 0.29,'AS','SUS'], 
+                       [852, 0.45,'F','SUS'], [535, 0.27,'SFTPS','RAS'], [441, 0.76,'AS','SUS'], [1110, 0.64,'F','AS']]
 
     # Da modificare 
-    risk_threshold = 3
+    risk_threshold = 4
     env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures, risk_threshold)
 
     obs, _ = env.reset()
