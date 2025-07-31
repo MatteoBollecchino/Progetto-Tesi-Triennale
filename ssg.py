@@ -3,7 +3,7 @@ import networkx as nx
 from utils import Utils as ut
 
 class StackelbergSecurityGameEnv(gym.Env):
-    def __init__(self, graph: nx.DiGraph, source_list: list, budget_defender : int, countermeasures: list):
+    def __init__(self, graph: nx.DiGraph, source_list: list, budget_defender : int, countermeasures: list, risk_threshold:int):
 
         super(StackelbergSecurityGameEnv, self).__init__()
         self.graph = graph # DiGraph
@@ -14,7 +14,8 @@ class StackelbergSecurityGameEnv(gym.Env):
         # Lista delle contromisure rimanenti alla fine del gioco
         self.remaining_countermeasures = countermeasures.copy()
        
-        self.risk_threshold = 3 # Soglia di rischio tollerabile
+       # Soglia di rischio tollerabile
+        self.risk_threshold = risk_threshold
 
         # Se il rischio non cambia per vari passi del gioco significa che si è raggiunto l'equilibrio
         self.previous_risk = 0
@@ -53,7 +54,7 @@ class StackelbergSecurityGameEnv(gym.Env):
 
         # Terminazione gioco: 
         # la lista delle contromisure è vuota, il rischio del grafo è sotto una soglia tollerabile, il budget è terminato
-        if (len(self.remaining_countermeasures) == 0) or (new_graph_risk <= self.risk_threshold) \
+        if (len(self.remaining_countermeasures) == 0) or (new_graph_risk < self.risk_threshold) \
             or (self.budget_defender == 0):
             done = True
 

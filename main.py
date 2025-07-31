@@ -46,7 +46,7 @@ if __name__ == "__main__":
     graph.nodes['RAS']['impact'] = 8
 
     source_list = ['OWS', 'EWS']
-    budget_defender = 5000
+    budget_defender = 6000
     
     # liste di 4 elementi : [costo, efficacia sull'arco, nodo_origine, nodo_destinazione]
     countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'EWS','S3'], [356, 0.31,'S3','F'],[214, 0.15,'S3','SS'], 
@@ -54,36 +54,10 @@ if __name__ == "__main__":
                        [759, 0.26,'F','PMS'], [542, 0.36,'F','SFTPS'], [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
 
     # Da modificare 
-    env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures)
+    risk_threshold = 3
+    env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures, risk_threshold)
 
     obs, _ = env.reset()
-
-    """
-    all = ut.get_all_paths(graph, source_list)
-
-    for path in all:
-        print(path)
-        print(ut.get_path_risk(graph, path))
-        print()
-
-    strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
-
-    graph = strategy[1]
-    countermeasures = strategy[2]
-
-    print()
-    print(ut.get_maximum_risk_path(graph,source_list))
-    print(ut.get_graph_risk(graph, source_list))
-    print(countermeasures)
-
-    all = ut.get_all_paths(graph, source_list)
-
-    for path in all:
-        print(path)
-        print(ut.get_path_risk(graph, path))
-        print()
-
-    """
 
     done = False
 
@@ -97,6 +71,8 @@ if __name__ == "__main__":
 
         graph = strategy[1]
 
+        print(ut.get_maximum_risk_path(graph,source_list))
+
         done, new_graph_risk, remaining_budget, applied_countermeasures = env.step(strategy)
 
         budget_defender = remaining_budget
@@ -107,10 +83,13 @@ if __name__ == "__main__":
         print(applied_countermeasures)
         print()
 
-        if new_graph_risk <= env.get_risk_threshold():
-            print("Il rischio ottenuto è accettabile")
-
         if done:
+
+            if new_graph_risk <= env.get_risk_threshold():
+                print(f"Il rischio {new_graph_risk} ottenuto è accettabile")
+            else:
+                print(f"Il rischio {new_graph_risk} ottenuto NON è accettabile")
+
             break
 
     # Aggiungere chiusura dell'enviroment
