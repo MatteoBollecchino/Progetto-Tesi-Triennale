@@ -64,7 +64,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         if self.counter == self.limit_step:
             done = True
 
-        return done, new_graph_risk, self.budget_defender, self.applied_countermeasures
+        return done, new_graph_risk, self.budget_defender, self.applied_countermeasures, self.maximum_risk_path
     
     def get_risk_threshold(self) -> int:
         

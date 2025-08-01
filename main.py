@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
     while True:
 
-        print(ut.get_maximum_risk_path(graph,source_list))
+        # print(ut.get_maximum_risk_path(graph,source_list))
 
         # strategy nel nostro caso corrisponderà all'applicazione delle contromisure
         # strategy = modified, new_graph, remaining_countermeasures, remaining_budget
@@ -84,24 +84,26 @@ if __name__ == "__main__":
 
         graph = strategy[1]
 
-        print(ut.get_maximum_risk_path(graph,source_list))
+        # print(ut.get_maximum_risk_path(graph,source_list))
 
-        done, new_graph_risk, remaining_budget, applied_countermeasures = env.step(strategy)
+        # attacker_strategy = path con maggior rischio (corrisponde alla strategia finale dell'attaccante) 
+        done, new_graph_risk, remaining_budget, applied_countermeasures, attacker_strategy = env.step(strategy)
 
         budget_defender = remaining_budget
 
-        print(done)
-        print(new_graph_risk)
-        print(remaining_budget)
-        print(applied_countermeasures)
-        print()
+        print(f"Terminato: {done}")
+        print(f"Rischio grafo: {new_graph_risk}")
+        print(f"Budget rimanente: {remaining_budget}")
+        print(f"Contromisure applicate: {applied_countermeasures} \n")
 
         if done:
 
+            print(f"Strategia finale attaccante: {attacker_strategy} \n")
+
             if new_graph_risk <= env.get_risk_threshold():
-                print(f"Il rischio {new_graph_risk} ottenuto è accettabile")
+                print(f"Il rischio {new_graph_risk} ottenuto è accettabile \n")
             else:
-                print(f"Il rischio {new_graph_risk} ottenuto NON è accettabile")
+                print(f"Il rischio {new_graph_risk} ottenuto NON è accettabile \n")
 
             break
 
