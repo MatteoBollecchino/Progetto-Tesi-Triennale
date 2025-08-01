@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     done = False
 
-    print(f"Rischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
+    print(f"\nRischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
 
     while True:
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
         print(f"Terminato: {done}")
         print(f"Rischio grafo: {new_graph_risk}")
         print(f"Budget rimanente: {remaining_budget}")
-        print(f"Contromisure applicate: {applied_countermeasures} \n")
+        print(f"Contromisure applicate: {applied_countermeasures} \n \n")
 
         if done:
 
