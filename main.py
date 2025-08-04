@@ -64,7 +64,6 @@ if __name__ == "__main__":
                        [542, 0.36,'F','SFTPS'], [142, 0.49,'F','SFTPS'], [852, 0.45,'F','SUS'], [600, 0.32,'PMS','AS'],
                        [154, 0.61,'AS','PMS'], [235, 0.29,'AS','SUS'], [441, 0.76,'AS','SUS'], [535, 0.27,'SFTPS','RAS']]
 
-    # Da modificare 
     risk_threshold = 4
     env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures, risk_threshold)
 
