@@ -110,6 +110,13 @@ if __name__ == "__main__":
 
             print(f"Strategia finale attaccante: {attacker_strategy} \n")
 
+            for u, v, d in graph.edges(data=True):
+                d["label"] = str(round(d["weight"],4))
+
+            pydot_graph = to_pydot(graph)
+            
+            pydot_graph.write_png("test1.png")
+
             if new_graph_risk <= env.get_risk_threshold():
                 print(f"Il rischio {new_graph_risk} ottenuto è accettabile \n")
             else:
