@@ -1,7 +1,6 @@
 import ssg as ssg
 import networkx as nx
 from utils import Utils as ut
-from networkx.drawing.nx_pydot import to_pydot
 
 if __name__ == "__main__":
 
