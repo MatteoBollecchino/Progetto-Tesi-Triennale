@@ -47,6 +47,9 @@ if __name__ == "__main__":
     graph.nodes['SFTPS']['impact'] = 9
     graph.nodes['RAS']['impact'] = 8
 
+    for u, v, d in graph.edges(data=True):
+        d["label"] = str(d["weight"])
+
     pydot_graph = to_pydot(graph)
     
     pydot_graph.write_png("test.png")
