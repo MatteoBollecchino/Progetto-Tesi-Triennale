@@ -1,6 +1,7 @@
 import gymnasium as gym
 import networkx as nx
 from utils import Utils as ut
+import os
 
 class StackelbergSecurityGameEnv(gym.Env):
     def __init__(self, graph: nx.DiGraph, source_list: list, budget_defender : int, countermeasures: list, risk_threshold:int):
@@ -29,6 +30,17 @@ class StackelbergSecurityGameEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
+
+        # Percorso della cartella (relativo o assoluto)
+        cartella = "Grafi"
+
+        # Elimina tutti i file nella cartella
+        for nome_file in os.listdir(cartella):
+            percorso_file = os.path.join(cartella, nome_file)
+            if os.path.isfile(percorso_file):
+                os.remove(percorso_file)
+                print(f"Eliminato: {percorso_file}")
+
         return 0, {}
 
     # DA MODIFICARE

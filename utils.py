@@ -1,4 +1,5 @@
 import networkx as nx 
+from networkx.drawing.nx_pydot import to_pydot
 
 class Utils:
     # Restituisce tutti i path che hanno origine in 'source'
@@ -154,3 +155,14 @@ class Utils:
         countermeasure_min_cost = min(found_list, key=lambda x: x[0])
 
         return found, countermeasure_min_cost
+    
+    # Salva in un file png il grafo passato per parametro
+    @staticmethod
+    def print_graph_png(graph: nx.DiGraph, it: int):
+        
+        for u, v, d in graph.edges(data=True):
+            d["label"] = str(round(d["weight"], 4))
+
+        pydot_graph = to_pydot(graph)
+        
+        pydot_graph.write_png(f"Grafi\grafo{it}.png")
