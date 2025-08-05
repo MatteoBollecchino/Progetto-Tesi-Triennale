@@ -2,6 +2,7 @@ import ssg as ssg
 import networkx as nx
 from utils import Utils as ut
 from networkx.drawing.nx_pydot import to_pydot
+import pydot
 
 if __name__ == "__main__":
 
@@ -48,7 +49,7 @@ if __name__ == "__main__":
 
     pydot_graph = to_pydot(graph)
     
-    pydot_graph.write_png("nx_digraph.png")
+    pydot_graph.write_png("test.png")
     
 
     source_list = ['OWS', 'EWS']
