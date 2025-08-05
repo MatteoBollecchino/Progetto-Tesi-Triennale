@@ -1,6 +1,7 @@
 import ssg as ssg
 import networkx as nx
 from utils import Utils as ut
+from networkx.drawing.nx_pydot import to_pydot
 
 if __name__ == "__main__":
 
@@ -45,11 +46,17 @@ if __name__ == "__main__":
     graph.nodes['SFTPS']['impact'] = 9
     graph.nodes['RAS']['impact'] = 8
 
+    pydot_graph = to_pydot(graph)
+    
+    pydot_graph.write_png("nx_digraph.png")
+    
+
     source_list = ['OWS', 'EWS']
     budget_defender = 6000
     
-    # liste di 4 elementi : [costo, efficacia sull'arco, nodo_origine, nodo_destinazione]
+    # liste di 5 elementi : [costo, efficacia sull'arco, nodo_origine, nodo_destinazione, minaccia STRIDE]
 
+    # le liste sono da modificare
     """
     # Caso in cui NON si raggiunge un rischio accettabile
     countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'EWS','S3'], [356, 0.31,'S3','F'],[214, 0.15,'S3','SS'], 
