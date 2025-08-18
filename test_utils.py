@@ -32,8 +32,8 @@ class TestUtils(unittest.TestCase):
         self.budget_defender = 5000
         
         # devono essere quartuple (liste di 4 elementi) ? (costo, efficacia sull'arco, nodo_origine, nodo_destinazione)
-        self.countermeasures = [[500, 0.2,'OWS','EWS'], [100, 0.08,'OWS','S3'], [214, 0.15,'S3','SS'], 
-                                [574, 0.38,'SS','MHS']]
+        self.countermeasures = [[500, 0.2,'OWS','EWS','I'], [100, 0.08,'OWS','S3','S'], [214, 0.15,'S3','SS','T'], 
+                                [574, 0.38,'SS','MHS','D']]
 
     def test_get_paths_from_source(self):
 
@@ -87,7 +87,7 @@ class TestUtils(unittest.TestCase):
         found, countermeasure = self.ut._search_countermeasure('OWS', 'S3', self.countermeasures)
 
         self.assertTrue(found)
-        self.assertEqual(countermeasure, [100, 0.08,'OWS','S3'])
+        self.assertEqual(countermeasure, [100, 0.08,'OWS','S3','S'])
 
         found, countermeasure = self.ut._search_countermeasure('EWS', 'OWS', self.countermeasures)
 
@@ -101,7 +101,7 @@ class TestUtils(unittest.TestCase):
                                                                                  self.countermeasures, self.budget_defender)
         
         self.assertTrue(modified)
-        self.assertCountEqual(countermeasures, [[500, 0.2,'OWS','EWS'], [100, 0.08,'OWS','S3'], [214, 0.15,'S3','SS']])
+        self.assertCountEqual(countermeasures, [[500, 0.2,'OWS','EWS','I'], [100, 0.08,'OWS','S3','S'], [214, 0.15,'S3','SS','T']])
         self.assertEqual(budget, 4426)
 
         # Da valutare se tenere o meno
@@ -120,7 +120,7 @@ class TestUtils(unittest.TestCase):
     def test_apply_countermeasure_False(self):
 
         graph1 = self.graph.copy()
-        countermeasures1 = [[710, 0.24,'F','AS'], [632, 0.17,'F','RAS'], [1542, 0.41,'AS','PMS'], [2358, 0.29,'AS','SUS']]
+        countermeasures1 = [[710, 0.24,'F','AS','I'], [632, 0.17,'F','RAS','T'], [1542, 0.41,'AS','PMS','E'], [2358, 0.29,'AS','SUS','S']]
         modified, graph, countermeasures, budget = self.ut.apply_countermeasures(self.graph, self.source_list,
                                                                                  countermeasures1, self.budget_defender)
         
