@@ -92,10 +92,13 @@ class Utils:
         # Viene posto a True in caso venga applicata almeno una contromisura
         modified = False
 
+        print("Contromisure trovate:")
+
         for i in range(len(max_risk_path)-1):
             node = max_risk_path[i]
             successor = max_risk_path[i+1]
             found, countermeasure = Utils._search_countermeasure(node, successor, countermeasures)
+
             print(countermeasure)
 
             # Se non si trova una contromisura si passa all'arco successivo
@@ -132,6 +135,8 @@ class Utils:
             countermeasures.remove(countermeasure)
             
             modified = True
+
+        print()
 
         return modified, graph, countermeasures, budget
 
