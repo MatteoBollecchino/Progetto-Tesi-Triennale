@@ -21,7 +21,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         # Se il rischio non cambia per vari passi del gioco significa che si è raggiunto l'equilibrio
         self.previous_risk = 0
         self.counter = 0
-        self.limit_step = 5
+        self.step_limit = 5
 
         self.applied_countermeasures = list() # Lista delle contromisure applicate durante i vari passi
 
@@ -43,7 +43,6 @@ class StackelbergSecurityGameEnv(gym.Env):
 
         return 0, {}
 
-    # DA MODIFICARE
     def step(self, action) -> tuple[bool, int, int, list]:
 
         done = False  # Gioco in più passi
@@ -73,7 +72,7 @@ class StackelbergSecurityGameEnv(gym.Env):
         if self.previous_risk == new_graph_risk:
             self.counter = self.counter + 1
 
-        if self.counter == self.limit_step:
+        if self.counter == self.step_limit:
             done = True
 
         return done, new_graph_risk, self.budget_defender, self.applied_countermeasures, self.maximum_risk_path
