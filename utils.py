@@ -127,7 +127,7 @@ class Utils:
             else:
                 continue
 
-            # Se li grafo è cambiato, allora lo si aggiorna effettivamente
+            # Se il grafo è cambiato, allora lo si aggiorna effettivamente
             # In questo modo ci si assicura che le modifiche al grafo siano significative e al prezzo minore possibile
             graph = new_graph
         
