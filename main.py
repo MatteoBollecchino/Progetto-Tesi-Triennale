@@ -148,5 +148,5 @@ if __name__ == "__main__":
 
         i = i + 1
 
-    # Chiusura dell'enviroment
+    # Chiusura dell'environment
     env.close()
