@@ -112,16 +112,6 @@ if __name__ == "__main__":
 
         graph = strategy[1]
 
-        """
-        # Stampa del grafo modificato
-        for u, v, d in graph.edges(data=True):
-                d["label"] = str(round(d["weight"],4))
-
-        pydot_graph = to_pydot(graph)
-        
-        pydot_graph.write_png(f"Grafi\grafo{i}.png")
-        """
-
         # attacker_strategy = path con maggior rischio (corrisponde alla strategia finale dell'attaccante) 
         done, new_graph_risk, remaining_budget, applied_countermeasures, attacker_strategy = env.step(strategy)
 
