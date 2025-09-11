@@ -70,7 +70,8 @@ if __name__ == "__main__":
     
     # Caso in cui si raggiunge un rischio accettabile
     countermeasures = [[500, 0.25,'OWS','EWS','S'], 
-                       [100, 0.08,'EWS','S3','E'], 
+                       [100, 0.08,'EWS','S3','E'],
+                       [0, 0.38,'F','PMS','S'],
                        [356, 0.31,'S3','F','T'], 
                        [214, 0.15,'S3','SS','I'], 
                        [150, 0.21,'S3','SS','S'], 
