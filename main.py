@@ -52,7 +52,6 @@ def main():
 
     # le liste sono da modificare
     
-    """
     # Caso in cui NON si raggiunge un rischio accettabile
     countermeasures = [[500, 0.2,'OWS','EWS','S'], 
                        [100, 0.08,'EWS','S3','D'], 
@@ -66,8 +65,8 @@ def main():
                        [542, 0.36,'F','SFTPS','S'],
                        [1542, 0.41,'AS','PMS','E'], 
                        [2358, 0.29,'AS','SUS','I']]
-    """
     
+    """
     # Caso in cui si raggiunge un rischio accettabile
     countermeasures = [[500, 0.25,'OWS','EWS','S'], 
                        [100, 0.08,'EWS','S3','E'],
@@ -89,6 +88,7 @@ def main():
                        [235, 0.29,'AS','SUS','S'], 
                        [441, 0.76,'AS','SUS','I'], 
                        [535, 0.27,'SFTPS','RAS','T']]
+    """
                        
     risk_threshold = 4
 
@@ -123,59 +123,85 @@ def main():
         print(f"Il rischio {mitigated_risk} ottenuto è accettabile \n")
         return
 
-    """
-    # Inizio SSG
+    previous_graph = graph.copy()
+    previous_budget = budget_defender
+    previous_countermeasures = countermeasures.copy()
+    budget_increment = 1000
 
-    env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures, risk_threshold)
-
-    obs, _ = env.reset()
-
-    ut.print_graph_png(graph, 0)
-
-    done = False
-
-    # print(f"\nRischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
-
-    # Contatore Iterazioni Gioco
-    i = 1
+    # Contatore Giochi
+    j = 1
 
     while True:
 
-        # strategy nel nostro caso corrisponderà all'applicazione delle contromisure
-        # strategy = modified, new_graph, remaining_countermeasures, remaining_budget
-        strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
+        # Inizio SSG
 
-        graph = strategy[1]
+        env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures, risk_threshold)
 
-        # attacker_strategy = path con maggior rischio (corrisponde alla strategia finale dell'attaccante) 
-        done, new_graph_risk, remaining_budget, applied_countermeasures, attacker_strategy = env.step(strategy)
+        obs, _ = env.reset()
 
-        budget_defender = remaining_budget
+        ut.print_graph_png(graph, 0)
 
-        print(f"Iterazione {i} del gioco")
-        print(f"Terminato: {done}")
-        print(f"Rischio grafo: {new_graph_risk}")
-        print(f"Budget rimanente: {remaining_budget}")
-        print(f"Contromisure applicate: {applied_countermeasures} \n \n")
+        done = False
 
-        if done:
+        # print(f"\nRischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
 
-            print(f"Strategia finale attaccante: {attacker_strategy} \n")
+        # Contatore Iterazioni Gioco
+        i = 1
 
-            ut.print_graph_png(graph, i)
+        while True:
 
-            if new_graph_risk <= env.get_risk_threshold():
-                print(f"Il rischio {new_graph_risk} ottenuto è accettabile \n")
-            else:
-                print(f"Il rischio {new_graph_risk} ottenuto NON è accettabile \n")
+            # strategy nel nostro caso corrisponderà all'applicazione delle contromisure
+            # strategy = modified, new_graph, remaining_countermeasures, remaining_budget
+            strategy = ut.apply_countermeasures(graph, source_list, countermeasures, budget_defender)
 
+            graph = strategy[1]
+
+            # attacker_strategy = path con maggior rischio (corrisponde alla strategia finale dell'attaccante) 
+            done, new_graph_risk, remaining_budget, applied_countermeasures, attacker_strategy = env.step(strategy)
+
+            budget_defender = remaining_budget
+
+            """
+            print(f"Iterazione {i} del gioco")
+            print(f"Terminato: {done}")
+            print(f"Rischio grafo: {new_graph_risk}")
+            print(f"Budget rimanente: {remaining_budget}")
+            print(f"Contromisure applicate: {applied_countermeasures} \n \n")
+            """
+
+            if done:
+
+                print(f"Strategia finale attaccante: {attacker_strategy} \n")
+                print(f"Budget rimanente: {remaining_budget}")
+                print(f"Contromisure applicate: {applied_countermeasures} \n \n")
+
+                ut.print_graph_png(graph, i)
+
+                if new_graph_risk < risk_threshold:
+
+                    print(f"Il rischio {new_graph_risk} ottenuto è accettabile \n")
+
+                    return
+                else:
+
+                    print(f"Il rischio {new_graph_risk} ottenuto NON è accettabile \n")
+                    graph = previous_graph.copy()
+                    budget_defender = previous_budget + budget_increment
+                    countermeasures = previous_countermeasures.copy()
+
+                break
+
+            i = i + 1
+
+        # Chiusura dell'environment
+        env.close()
+
+        if j == 5 :
             break
 
-        i = i + 1
+        j = j + 1
 
-    # Chiusura dell'environment
-    env.close()
-    """
+
 
 if __name__ == "__main__":
     main()
