@@ -93,7 +93,6 @@ def main():
     risk_threshold = 4
 
     # Controllo rischio grafo senza contromisure
-
     unmitigated_risk = ut.get_graph_risk(graph,source_list)
     print(f"\nRischio iniziale: {unmitigated_risk} \n")
 
@@ -102,18 +101,29 @@ def main():
         print(f"Il rischio {unmitigated_risk} ottenuto è accettabile \n")
         return
     
-    # Lista di contromisure già implementate, fornite dall'owner
-
-    implemented_countermeasures = []
+    # Lista di contromisure già implementate, fornite dall'owner (hanno costo nullo)
+    implemented_countermeasures = [[0, 0.14,'OWS','EWS','S'], 
+                                [0, 0.06,'EWS','S3','D'], 
+                                [0, 0.28,'S3','F','T'],
+                                [0, 0.34,'S3','SS','I'], 
+                                [0, 0.16,'MHS','SS','S'], 
+                                [0, 0.12,'F','AS','D'], 
+                                [0, 0.26,'F','PMS','I'], 
+                                [0, 0.09,'AS','PMS','E']]
 
     # Si applicano al grafo la lista di contromisure già implementate
-
-
+    graph = ut.apply_implemented_countermeasures(graph, source_list, implemented_countermeasures)
 
     # Controllo rischio grafo con contromisure iniziali
+    mitigated_risk = ut.get_graph_risk(graph,source_list)
+    print(f"\nRischio dopo le contromisure già implementate: {mitigated_risk} \n")
 
+    # Se il rischio è tollerabile termina tutto
+    if mitigated_risk < risk_threshold:
+        print(f"Il rischio {mitigated_risk} ottenuto è accettabile \n")
+        return
 
-
+    """
     # Inizio SSG
 
     env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures, risk_threshold)
@@ -165,6 +175,7 @@ def main():
 
     # Chiusura dell'environment
     env.close()
+    """
 
 if __name__ == "__main__":
     main()
