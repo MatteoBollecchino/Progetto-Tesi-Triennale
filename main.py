@@ -2,7 +2,7 @@ import ssg as ssg
 import networkx as nx
 from utils import Utils as ut
 
-if __name__ == "__main__":
+def main():
 
     # Creazione grafo SUC
     graph = nx.DiGraph()
@@ -71,7 +71,6 @@ if __name__ == "__main__":
     # Caso in cui si raggiunge un rischio accettabile
     countermeasures = [[500, 0.25,'OWS','EWS','S'], 
                        [100, 0.08,'EWS','S3','E'],
-                       [0, 0.38,'F','PMS','S'],
                        [356, 0.31,'S3','F','T'], 
                        [214, 0.15,'S3','SS','I'], 
                        [150, 0.21,'S3','SS','S'], 
@@ -92,6 +91,31 @@ if __name__ == "__main__":
                        [535, 0.27,'SFTPS','RAS','T']]
                        
     risk_threshold = 4
+
+    # Controllo rischio grafo senza contromisure
+
+    unmitigated_risk = ut.get_graph_risk(graph,source_list)
+    print(f"\nRischio iniziale: {unmitigated_risk} \n")
+
+    # Se il rischio è tollerabile termina tutto
+    if unmitigated_risk < risk_threshold:
+        print(f"Il rischio {unmitigated_risk} ottenuto è accettabile \n")
+        return
+    
+    # Lista di contromisure già implementate, fornite dall'owner
+
+    implemented_countermeasures = []
+
+    # Si applicano al grafo la lista di contromisure già implementate
+
+
+
+    # Controllo rischio grafo con contromisure iniziali
+
+
+
+    # Inizio SSG
+
     env = ssg.StackelbergSecurityGameEnv(graph, source_list, budget_defender, countermeasures, risk_threshold)
 
     obs, _ = env.reset()
@@ -100,7 +124,7 @@ if __name__ == "__main__":
 
     done = False
 
-    print(f"\nRischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
+    # print(f"\nRischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
 
     # Contatore Iterazioni Gioco
     i = 1
@@ -141,3 +165,6 @@ if __name__ == "__main__":
 
     # Chiusura dell'environment
     env.close()
+
+if __name__ == "__main__":
+    main()

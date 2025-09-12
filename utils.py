@@ -171,3 +171,59 @@ class Utils:
         pydot_graph = to_pydot(graph)
         
         pydot_graph.write_png(f"Grafi\grafo{it}.png")
+
+    # Applica al grafo le contromisure già implementate nel sistema, 
+    # quindi non esegue alcuna modifica al budget iniziale
+    @staticmethod
+    def apply_implemented_countermeasures(graph: nx.DiGraph, source_list:list, countermeasures: list) -> tuple[nx.DiGraph, list, int] :
+
+        new_graph = graph.copy()
+
+        # Da modificare
+        edges_list = graph.edges
+
+        for i in range(len(max_risk_path)-1):
+            node = max_risk_path[i]
+            successor = max_risk_path[i+1]
+            found, countermeasure = Utils._search_countermeasure(node, successor, countermeasures)
+
+            print(countermeasure)
+
+            # Se non si trova una contromisura si passa all'arco successivo
+            if not found:
+                continue
+
+            # Rischio prima dell'applicazione delle contromisure
+            previous_risk = Utils.get_graph_risk(graph, source_list)
+
+            # Modifica grafo
+            reduction = round(new_graph[countermeasure[2]][countermeasure[3]]['weight']*countermeasure[1], 4)
+            new_graph[countermeasure[2]][countermeasure[3]]['weight'] = \
+                                new_graph[countermeasure[2]][countermeasure[3]]['weight'] - reduction
+            
+            # Controllo cambiamento rischio
+            changed_risk = Utils.get_graph_risk(new_graph, source_list)
+            
+            # Il rischio non è cambiato, quindi si salta all'arco successivo senza applicare nulla
+            if previous_risk == changed_risk:
+                continue
+        
+            # Modifica budget
+            new_budget = budget - countermeasure[0]
+            if new_budget >= 0:
+                budget = new_budget
+            else:
+                continue
+
+            # Se il grafo è cambiato, allora lo si aggiorna effettivamente
+            # In questo modo ci si assicura che le modifiche al grafo siano significative e al prezzo minore possibile
+            graph = new_graph
+        
+            # Modifica lista contromisure
+            countermeasures.remove(countermeasure)
+            
+            modified = True
+
+        print()
+
+        return modified, graph, countermeasures, budget
