@@ -52,7 +52,7 @@ def main():
 
     # le liste sono da modificare
     
-    # Caso in cui NON si raggiunge un rischio accettabile
+    # Caso in cui NON si raggiunge un rischio accettabile al primo SSG
     countermeasures = [[500, 0.2,'OWS','EWS','S'], 
                        [100, 0.08,'EWS','S3','D'], 
                        [356, 0.31,'S3','F','T'],
@@ -60,14 +60,23 @@ def main():
                        [150, 0.21, 'S3', 'SS','T'],
                        [574, 0.38,'MHS','SS','S'], 
                        [710, 0.24,'F','AS','D'], 
-                       [632, 0.17,'F','RAS','E'], 
-                       [759, 0.26,'F','PMS','I'], 
+                       [632, 0.17,'F','RAS','E'],
+                       [3632, 0.17,'F','RAS','S'],
+                       [1275, 0.21,'F','RAS','I'], 
+                       [759, 0.46,'F','PMS','I'],
+                       [691, 0.61,'F','SUS','D'], 
                        [542, 0.36,'F','SFTPS','S'],
-                       [1542, 0.41,'AS','PMS','E'], 
-                       [2358, 0.29,'AS','SUS','I']]
+                       [1890, 0.46,'F','SFTPS','I'],
+                       [1542, 0.41,'AS','PMS','E'],
+                       [623, 0.19,'AS','PMS','T'],
+                       [2358, 0.29,'AS','SUS','I'],
+                       [358, 0.48,'AS','SUS','S'],
+                       [857, 0.63,'PMS','AS','D'], 
+                       [3260, 0.39,'RAS','SFTPS','E'],
+                       [2260, 0.49,'SFTPS','RAS','T']]
     
     """
-    # Caso in cui si raggiunge un rischio accettabile
+    # Caso in cui si raggiunge un rischio accettabile al primo SSG
     countermeasures = [[500, 0.25,'OWS','EWS','S'], 
                        [100, 0.08,'EWS','S3','E'],
                        [356, 0.31,'S3','F','T'], 
@@ -141,6 +150,8 @@ def main():
 
         ut.print_graph_png(graph, 0)
 
+        print(f"Budget Iniziale: {budget_defender}")
+
         done = False
 
         # print(f"\nRischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
@@ -186,7 +197,7 @@ def main():
 
                     print(f"Il rischio {new_graph_risk} ottenuto NON è accettabile \n")
                     graph = previous_graph.copy()
-                    budget_defender = previous_budget + budget_increment
+                    budget_defender = previous_budget + j * budget_increment
                     countermeasures = previous_countermeasures.copy()
 
                 break
@@ -196,7 +207,8 @@ def main():
         # Chiusura dell'environment
         env.close()
 
-        if j == 5 :
+        if j == 10 :
+            print("Contromisure Insufficienti")
             break
 
         j = j + 1
