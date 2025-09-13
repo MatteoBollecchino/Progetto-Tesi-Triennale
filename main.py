@@ -37,9 +37,9 @@ def main():
     graph.nodes['EWS']['impact'] = 2
     graph.nodes['S3']['impact'] = 3
     graph.nodes['MHS']['impact'] = 4
-    graph.nodes['SS']['impact'] = 4
+    graph.nodes['SS']['impact'] = 5
     graph.nodes['F']['impact'] = 9
-    graph.nodes['PMS']['impact'] = 9
+    graph.nodes['PMS']['impact'] = 6
     graph.nodes['AS']['impact'] = 10
     graph.nodes['SUS']['impact'] = 7
     graph.nodes['SFTPS']['impact'] = 9
