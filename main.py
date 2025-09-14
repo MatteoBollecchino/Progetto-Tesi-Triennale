@@ -47,7 +47,7 @@ def main():
 
     source_list = ['OWS', 'EWS']
     budget_defender = 6000
-    
+
     # liste di 5 elementi : [costo, efficacia sull'arco, nodo_origine, nodo_destinazione, minaccia STRIDE]
 
     # le liste sono da modificare
@@ -97,8 +97,8 @@ def main():
                        [235, 0.29,'AS','SUS','S'], 
                        [441, 0.76,'AS','SUS','I'], 
                        [535, 0.27,'SFTPS','RAS','T']]
-    """
-                       
+    """  
+                
     risk_threshold = 4
 
     # Controllo rischio grafo senza contromisure
