@@ -131,6 +131,8 @@ def main():
     if mitigated_risk < risk_threshold:
         print(f"Il rischio {mitigated_risk} ottenuto è accettabile \n")
         return
+    
+    G1 = graph.copy()
 
     previous_graph = graph.copy()
     previous_budget = budget_defender
@@ -172,14 +174,6 @@ def main():
 
             budget_defender = remaining_budget
 
-            """
-            print(f"Iterazione {i} del gioco")
-            print(f"Terminato: {done}")
-            print(f"Rischio grafo: {new_graph_risk}")
-            print(f"Budget rimanente: {remaining_budget}")
-            print(f"Contromisure applicate: {applied_countermeasures} \n \n")
-            """
-
             if done:
 
                 print(f"Strategia finale attaccante: {attacker_strategy} \n")
@@ -187,10 +181,12 @@ def main():
                 print(f"Contromisure applicate: {applied_countermeasures} \n \n")
 
                 ut.print_graph_png(graph, i)
+                G2 = graph.copy()
 
                 if new_graph_risk < risk_threshold:
 
                     print(f"Il rischio {new_graph_risk} ottenuto è accettabile \n")
+                    ut.export_graph_diff_png(G1, G2)
 
                     return
                 else:

@@ -1,5 +1,6 @@
 import networkx as nx 
-from networkx.drawing.nx_pydot import to_pydot
+from networkx.drawing.nx_pydot import to_pydot, write_dot
+import matplotlib.pyplot as plt
 
 class Utils:
     # Restituisce tutti i path che hanno origine in 'source'
@@ -160,17 +161,6 @@ class Utils:
         countermeasure_min_cost = min(found_list, key=lambda x: x[0])
 
         return found, countermeasure_min_cost
-    
-    # Salva in un file png il grafo passato per parametro
-    @staticmethod
-    def print_graph_png(graph: nx.DiGraph, it: int):
-        
-        for u, v, d in graph.edges(data=True):
-            d["label"] = str(round(d["weight"], 4))
-
-        pydot_graph = to_pydot(graph)
-        
-        pydot_graph.write_png(f"Grafi\grafo{it}.png")
 
     # Applica al grafo le contromisure che l'owner riferisce già essere implementate nel sistema, 
     # quindi non esegue alcuna modifica al budget iniziale
@@ -187,3 +177,53 @@ class Utils:
                                 new_graph[countermeasure[2]][countermeasure[3]]['weight'] - reduction
             
         return new_graph
+    
+    # Salva in un file png il grafo passato per parametro
+    @staticmethod
+    def print_graph_png(graph: nx.DiGraph, it: int):
+        
+        for u, v, d in graph.edges(data=True):
+            d["label"] = str(round(d["weight"], 4))
+
+        pydot_graph = to_pydot(graph)
+        
+        pydot_graph.write_png(f"Grafi\grafo{it}.png")
+    
+
+    # Salva in un file png il grafo rappresentante le differenze dei 2 grafi passati per parametri
+    def export_graph_diff_png(G1: nx.DiGraph, G2: nx.DiGraph, filename="Grafi\diff.png"):
+        """
+        Esporta un PNG che evidenzia gli archi i cui pesi sono cambiati tra due DiGraph.
+        - Archi con peso invariato = nero
+        - Archi con peso modificato = arancione e più spessi
+        - Nodi invariati = blu chiaro
+        """
+
+        # Archi comuni
+        edges_common = set(G1.edges()) & set(G2.edges())
+
+        # Creo grafo unificato (parto da G2 come base)
+        G = nx.DiGraph()
+        G.add_nodes_from(G2.nodes())
+        G.add_edges_from(G2.edges())
+
+        # Attributi nodi (semplici)
+        for n in G.nodes():
+            G.nodes[n]["style"] = "filled"
+            G.nodes[n]["fillcolor"] = "lightblue"
+
+        # Attributi archi
+        for e in edges_common:
+            w1 = round(G1.edges[e].get("weight", None), 4)
+            w2 = round(G2.edges[e].get("weight", None), 4)
+            if w1 != w2:  # peso cambiato
+                G.edges[e]["color"] = "orange"
+                G.edges[e]["penwidth"] = "3"
+                G.edges[e]["label"] = f"{w1}->{w2}"
+            else:  # invariato
+                G.edges[e]["color"] = "black"
+                G.edges[e]["label"] = str(w2) if w2 is not None else ""
+
+        # Esporto in PNG con pydot
+        P = to_pydot(G)
+        P.write_png(filename)
