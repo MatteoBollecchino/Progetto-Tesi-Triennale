@@ -30,7 +30,6 @@ def main():
     graph.add_edge('RAS', 'SFTPS', weight = 0.47)
 
 
-
     # Nodi più esterni -> impatto minore
 
     graph.nodes['OWS']['impact'] = 1
@@ -72,8 +71,24 @@ def main():
                        [2358, 0.29,'AS','SUS','I'],
                        [358, 0.48,'AS','SUS','S'],
                        [857, 0.63,'PMS','AS','D'], 
-                       [3260, 0.39,'RAS','SFTPS','E'],
-                       [2260, 0.49,'SFTPS','RAS','T']]
+                       [3260, 0.19,'RAS','SFTPS','E'],
+                       [2260, 0.49,'SFTPS','RAS','T'],
+
+                       [711, 0.24,'F','AS','D'], 
+                       [631, 0.17,'F','RAS','E'],
+                       [3631, 0.17,'F','RAS','S'],
+                       [1271, 0.21,'F','RAS','I'], 
+                       [751, 0.46,'F','PMS','I'],
+                       [692, 0.61,'F','SUS','D'], 
+                       [541, 0.36,'F','SFTPS','S'],
+                       [1891, 0.46,'F','SFTPS','I'],
+                       [1541, 0.41,'AS','PMS','E'],
+                       [621, 0.19,'AS','PMS','T'],
+                       [2351, 0.29,'AS','SUS','I'],
+                       [351, 0.48,'AS','SUS','S'],
+                       [851, 0.63,'PMS','AS','D'], 
+                       [3321, 0.21,'RAS','SFTPS','E'],
+                       [2261, 0.49,'SFTPS','RAS','T']]
     
     """
     # Caso in cui si raggiunge un rischio accettabile al primo SSG
@@ -155,8 +170,6 @@ def main():
         print(f"Budget Iniziale: {budget_defender}")
 
         done = False
-
-        # print(f"\nRischio iniziale: {ut.get_graph_risk(graph,source_list)} \n")
 
         # Contatore Iterazioni Gioco
         i = 1

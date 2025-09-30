@@ -1,6 +1,5 @@
 import networkx as nx 
-from networkx.drawing.nx_pydot import to_pydot, write_dot
-import matplotlib.pyplot as plt
+from networkx.drawing.nx_pydot import to_pydot
 
 class Utils:
     # Restituisce tutti i path che hanno origine in 'source'
@@ -89,18 +88,15 @@ class Utils:
         max_risk_path = Utils.get_maximum_risk_path(graph, source_list)
 
         new_graph = graph.copy()
+        new_graph_2 = graph.copy()
 
         # Viene posto a True in caso venga applicata almeno una contromisura
         modified = False
-
-        # print("Contromisure trovate:")
 
         for i in range(len(max_risk_path)-1):
             node = max_risk_path[i]
             successor = max_risk_path[i+1]
             found, countermeasure = Utils._search_countermeasure(node, successor, countermeasures)
-
-            # print(countermeasure)
 
             # Se non si trova una contromisura si passa all'arco successivo
             if not found:
@@ -119,8 +115,9 @@ class Utils:
             
             # Il rischio non è cambiato, quindi si salta all'arco successivo senza applicare nulla
             if previous_risk == changed_risk:
+                new_graph = new_graph_2.copy() # Riga aggiunta
                 continue
-        
+            
             # Modifica budget
             new_budget = budget - countermeasure[0]
             if new_budget >= 0:
@@ -130,20 +127,18 @@ class Utils:
 
             # Se il grafo è cambiato, allora lo si aggiorna effettivamente
             # In questo modo ci si assicura che le modifiche al grafo siano significative e al prezzo minore possibile
-            graph = new_graph
+            graph = new_graph.copy() # Riga modificata
         
             # Modifica lista contromisure
             countermeasures.remove(countermeasure)
             
             modified = True
 
-        # print()
-
         return modified, graph, countermeasures, budget
 
     # Restituice costo ed effcicacia della contromisura (i nodi sono esclusi perché già noti)
     @staticmethod
-    def _search_countermeasure(node_1: str, node_2: str, countermeasures: list) -> tuple[bool, int, float]:
+    def _search_countermeasure(node_1: str, node_2: str, countermeasures: list) -> tuple[bool, int]:
         
         found_list = list()
 
