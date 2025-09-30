@@ -115,7 +115,7 @@ class Utils:
             
             # Il rischio non è cambiato, quindi si salta all'arco successivo senza applicare nulla
             if previous_risk == changed_risk:
-                new_graph = new_graph_2.copy() # Riga aggiunta
+                new_graph = new_graph_2.copy()
                 continue
             
             # Modifica budget
@@ -127,7 +127,7 @@ class Utils:
 
             # Se il grafo è cambiato, allora lo si aggiorna effettivamente
             # In questo modo ci si assicura che le modifiche al grafo siano significative e al prezzo minore possibile
-            graph = new_graph.copy() # Riga modificata
+            graph = new_graph.copy()
         
             # Modifica lista contromisure
             countermeasures.remove(countermeasure)
