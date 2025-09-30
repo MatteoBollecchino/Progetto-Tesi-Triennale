@@ -43,7 +43,7 @@ class StackelbergSecurityGameEnv(gym.Env):
 
         return 0, {}
 
-    def step(self, action) -> tuple[bool, int, int, list]:
+    def step(self, action) -> tuple[bool, int, int, list, list]:
 
         done = False  # Gioco in più passi
 
